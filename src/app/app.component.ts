@@ -1,44 +1,41 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar, Splashscreen  } from 'ionic-native';
 
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-
+import { Home } from '../pages/home/home';
+import { DataProvider } from '../providers/dataProvider';
+import { Addiction } from '../entities/addiction';
 
 @Component({
-  templateUrl: 'app.html'
+	templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+	@ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+	rootPage: any = Home;
 
-  pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
-    this.initializeApp();
+	addictions: Addiction[] = [];
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 }
-    ];
+ 	constructor(public platform: Platform, private dataProvider: DataProvider) {
+	    this.platform.ready().then(() => {
+			StatusBar.styleDefault();
+			Splashscreen.hide();
+			this.dataProvider.getAddictions()
+				.then((addictions) => this.addictions = addictions)
+				.catch((err) => console.log(err));
+    	});
+ 	}
 
-  }
+	infoChange(addiction: Addiction) {
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-    });
-  }
+		this.dataProvider.setAddiction(addiction.id, addiction.activated);
+  		//NativeStorage.setItem(info.title, info.activated);
+  	}
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+  	openPage(page) {
+		// Reset the content nav to have just this page
+		// we wouldn't want the back button to show in this scenario
+	    this.nav.setRoot(page.component);
+  	}
 }

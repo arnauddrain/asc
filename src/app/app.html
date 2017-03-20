@@ -6,10 +6,12 @@
   </ion-header>
 
   <ion-content>
+    Activation des informations suivies
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+      <ion-item *ngFor="let addiction of addictions">
+        <ion-label>{{ addiction.name }}</ion-label>
+        <ion-toggle [(ngModel)]="addiction.activated" (ionChange)="infoChange(addiction)" item-right></ion-toggle>
+      </ion-item>
     </ion-list>
   </ion-content>
 

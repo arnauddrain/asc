@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sommeil & consommations</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngFor="let day of days">
+
+    <ion-card-header>
+      Journée et nuit du {{ day.date.getDate() }} / {{ day.date.getMonth() + 1 }}
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <button ion-button *ngIf="!day.filled" (click)="goToForm($event, day)">
+        Remplir maintenant
+      </button>
+      
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>
