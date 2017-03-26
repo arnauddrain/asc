@@ -1,12 +1,52 @@
 <ion-header>
 	<ion-navbar>
-		<button ion-button menuToggle>
-			<ion-icon name="menu"></ion-icon>
-		</button>
 		<ion-title>{{ day.date.getDate() }} / {{ day.date.getMonth() + 1 }} / {{ day.date.getFullYear() }}</ion-title>
+		<ion-buttons end>
+			<button ion-button (click)="done()" strong>
+				<span color="primary">
+					Enregistrer
+				</span>
+			</button>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content>
-	Coucou
+	<ion-card *ngFor="let dayAddiction of day.dayAddictions" [hidden]="!dayAddiction.addiction.activated">
+		<ion-card-header>
+			{{ dayAddiction.addiction.name }}
+		</ion-card-header>
+		<ion-card-content>
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						Matin :<br>
+						<ion-checkbox [(ngModel)]="dayAddiction.morning"></ion-checkbox>
+					</ion-col>
+					<ion-col>
+						Après-midi :<br>
+						<ion-checkbox [(ngModel)]="dayAddiction.afternoon"></ion-checkbox>
+					</ion-col>
+					<ion-col>
+						Soirée :<br>
+						<ion-checkbox [(ngModel)]="dayAddiction.evening"></ion-checkbox>
+					</ion-col>
+					<ion-col>
+						Nuit :<br>
+						<ion-checkbox [(ngModel)]="dayAddiction.night"></ion-checkbox>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			{{dayAddiction.value}}
+			<ion-range [(ngModel)]="dayAddiction.value"></ion-range>
+		</ion-card-content>
+	</ion-card>
+	<ion-card>
+		<ion-card-header>
+			Note
+		</ion-card-header>
+		<ion-card-content>
+			<ion-input [(ngModel)]="day.note"></ion-input>
+		</ion-card-content>
+	</ion-card>
 </ion-content>

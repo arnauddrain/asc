@@ -8,11 +8,11 @@ export class MigrationProvider {
 	migrations: string[][] = [
 		[
 			'CREATE TABLE `addictions` (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL, activated BOOLEAN DEFAULT 0)',
-			'CREATE TABLE `days` (id INTEGER PRIMARY KEY, date DATE, note TEXT)',
-			'CREATE TABLE `dayAddictions` (id_addiction INTEGER, id_day INTERGER, morning BOOLEAN, afternoon BOOLEAN, evening BOOLEAN, night BOOLEAN)'
+			'CREATE TABLE `days` (id INTEGER PRIMARY KEY, date DATE, note TEXT, sleepless BOOLEAN, bedtime TEXT, bedtime_duration INTEGER, wakingtime TEXT, wakingtime_duration INTEGER, hypnotic TEXT)',
+			'CREATE TABLE `dayAddictions` (id_addiction INTEGER, id_day INTEGER, morning BOOLEAN, afternoon BOOLEAN, evening BOOLEAN, night BOOLEAN, value INTEGER)'
 		],
 		[
-			'INSERT INTO `addictions` (name) VALUES ("Ecrans"), ("Tabac"), ("Alcool")'
+			'INSERT INTO `addictions` (name, activated) VALUES ("Ecrans", 1), ("Tabac", 0), ("Alcool", 0)'
 		]
 	];
 

@@ -12,14 +12,56 @@
   <ion-card *ngFor="let day of days">
 
     <ion-card-header>
-      Journée et nuit du {{ day.date.getDate() }} / {{ day.date.getMonth() + 1 }}
+      Journée et nuit du {{ formatDate(day.date) }}
     </ion-card-header>
 
     <ion-card-content>
 
-      <button ion-button *ngIf="!day.filled" (click)="goToForm($event, day)">
+      <button ion-button *ngIf="!day.id" (click)="goToForm($event, day)">
         Remplir maintenant
       </button>
+
+      <div *ngIf="day.id">
+        <ion-grid>
+          <ion-row *ngFor="let dayAddiction of day.dayAddictions">
+            <ion-col col-2 *ngIf="dayAddiction.addiction.activated">
+              {{ dayAddiction.addiction.name }}
+            </ion-col>
+            <ion-col col-10 *ngIf="dayAddiction.addiction.activated">
+              <ion-row>
+                <ion-col col-12>
+                  {{ dayAddiction.value }}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span *ngIf="dayAddiction.morning"><b>Matin</b></span>
+                  <span *ngIf="!dayAddiction.morning">Matin</span>
+                </ion-col>
+                <ion-col>
+                  <span *ngIf="dayAddiction.afternoon"><b>Après-midi</b></span>
+                  <span *ngIf="!dayAddiction.afternoon">Après-midi</span>
+                </ion-col>
+                <ion-col>
+                  <span *ngIf="dayAddiction.evening"><b>Soirée</b></span>
+                  <span *ngIf="!dayAddiction.evening">Soirée</span>
+                </ion-col>
+                <ion-col>
+                  <span *ngIf="dayAddiction.night"><b>Nuit</b></span>
+                  <span *ngIf="!dayAddiction.night">Nuit</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            Note : {{ day.note }}
+          </ion-row>
+        </ion-grid>
+
+        <button ion-button (click)="goToForm($event, day)">
+          Editer
+        </button>
+      </div>
       
     </ion-card-content>
 

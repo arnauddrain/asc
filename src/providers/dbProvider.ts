@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SQLite } from 'ionic-native';
+import { Platform } from 'ionic-angular';
 import { MigrationProvider } from './migrationProvider';
 
 @Injectable()
@@ -8,29 +9,25 @@ export class DbProvider {
 	dbOpened: boolean = false;
 	readyCallbacks: { (db: SQLite): void }[] = [];
 	
-	currentRequest: string = null;
-	params: string[] = null;
+	constructor(migrationProvider: MigrationProvider, public platform: Platform) {
+		
+		this.platform.ready().then(() => {
+			this.db = new SQLite();
 
-	isInTransaction: boolean = false;
-	transactionRequests: string[] = [];
-	transactionParams: string[][] = [];
+			console.log("Opening database..");
+			this.db.openDatabase({
+				name: 'mylan.db',
+				location: 'default'
+			}).then(() => {
+				console.log("The database is open");
+				migrationProvider.migrate(this.db).then(() => {
+					this.dbOpened = true;
+					this.readyCallbacks.map((cb) => cb(this.db));
+				}, (err) => console.log("Error during migrations", err));
 
-	constructor(migrationProvider: MigrationProvider) {
-		this.db = new SQLite();
-
-		console.log("Opening database..");
-		this.db.openDatabase({
-			name: 'mylan.db',
-			location: 'default'
-		}).then(() => {
-			console.log("The database is open");
-			migrationProvider.migrate(this.db).then(() => {
-				this.dbOpened = true;
-				this.readyCallbacks.map((cb) => cb(this.db));
-			}, (err) => console.log("Error during migrations", err));
-
-		}, (err) => {
-			console.log("Error while opening the databse : ", err);
+			}, (err) => {
+				console.log("Error while opening the databse : ", err);
+			});
 		});
 	}
 
@@ -43,6 +40,18 @@ export class DbProvider {
 			}
 		});
 	}
+}
+
+@Injectable()
+export class DbRequest {
+	currentRequest: string = null;
+	params: string[] = null;
+
+	isInTransaction: boolean = false;
+	transactionRequests: string[] = [];
+	transactionParams: string[][] = [];
+
+	constructor(private dbProvider: DbProvider) {}
 
 	private addRequest(request: string, params: string[]) {
 		if (this.isInTransaction) {
@@ -58,7 +67,7 @@ export class DbProvider {
 		if (this.isInTransaction) {
 			this.transactionRequests[this.transactionParams.length - 1] += request;
 			if (params && params.length > 0) {
-				this.transactionParams[this.params.length - 1] = this.transactionParams[this.params.length - 1].concat(params);
+				this.transactionParams[this.transactionParams.length - 1] = this.transactionParams[this.transactionParams.length - 1].concat(params);
 			}
 		} else {
 			this.currentRequest += request;
@@ -138,6 +147,12 @@ export class DbProvider {
 		return this;
 	}
 
+	and(field: string, operator: string, value: string) {
+		let request = ' AND ' + field + ' ' + operator + ' ?';
+		this.completeRequest(request, [value]);
+		return this;
+	}
+
 	join(table: string, field1: string, field2: string) {
 		let request = ' INNER JOIN ' + table + ' ON ' + field1 + ' = ' + field2;
 		this.completeRequest(request);
@@ -157,11 +172,12 @@ export class DbProvider {
 
 	startTransaction() {
 		this.isInTransaction = true;
+		return this;
 	}
 
 	executeTransaction() {
 		return new Promise((resolve, reject) => {
-			this.getDb().then((db: SQLite) => {
+			this.dbProvider.getDb().then((db: SQLite) => {
 				db.transaction((tx) => {
 					for (let i in this.transactionRequests) {
 						tx.executeSql(this.transactionRequests[i], this.transactionParams[i]);
@@ -188,7 +204,7 @@ export class DbProvider {
 			if (this.currentRequest === null || this.params === null) {
 				return reject("No request prepared");
 			}
-			this.getDb().then((db: SQLite) => {
+			this.dbProvider.getDb().then((db: SQLite) => {
 				db.executeSql(this.currentRequest, this.params).then((data) => {
 					this.resetRequest();
 					resolve(data);

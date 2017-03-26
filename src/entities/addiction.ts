@@ -1,3 +1,10 @@
 export class Addiction {
-	constructor(public id: number, public name: string, public activated: boolean) {}
+	public activated: boolean;
+
+	constructor(public id: number, public name: string, activated: any) {
+		if (activated === "false")
+			this.activated = false;
+		else
+			this.activated = activated;
+	}
 }
