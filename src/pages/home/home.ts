@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Events } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/dataProvider';
 import { Form } from '../form/form';
@@ -18,9 +18,12 @@ export class Home {
 	startDate: string;
 	days: Day[] = [];
 
-	constructor(public storage: Storage, public modalCtrl: ModalController, public dataProvider: DataProvider) {
+	constructor(public storage: Storage, public modalCtrl: ModalController, public dataProvider: DataProvider, public events: Events) {
 		storage.ready().then(() => {
-			this.initializeDate(); 
+			this.initializeDate();
+			this.events.subscribe('addictions:updated', () => {
+				this.checkDays()
+			});
 		});
  	}
 
@@ -57,6 +60,7 @@ export class Home {
 	** Go through all the days and look if they exists in database
 	*/
 	checkDays() {
+		this.days = [];
 		this.dataProvider.getDays()
 			.then((days) => {
 				let now = new Date();

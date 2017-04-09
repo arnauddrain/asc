@@ -68,7 +68,7 @@ export class DataProvider {
 	}
 
 	updateDayAddiction(day: Day, resolve, reject) {
-		let request = new DbRequest(this.dbProvider).update('days', [['note', day.note]])
+		new DbRequest(this.dbProvider).update('days', [['note', day.note]])
 			.where('id', '=', String(day.id))
 			.execute()
 			.then((data) => {

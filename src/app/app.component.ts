@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar, Splashscreen  } from 'ionic-native';
 
 import { Home } from '../pages/home/home';
@@ -17,7 +17,7 @@ export class MyApp {
 
 	addictions: Addiction[] = [];
 
- 	constructor(public platform: Platform, private dataProvider: DataProvider) {
+ 	constructor(public platform: Platform, private dataProvider: DataProvider, public events: Events) {
 	    this.platform.ready().then(() => {
 			StatusBar.styleDefault();
 			Splashscreen.hide();
@@ -28,14 +28,8 @@ export class MyApp {
  	}
 
 	infoChange(addiction: Addiction) {
-
-		this.dataProvider.setAddiction(addiction.id, addiction.activated);
-  		//NativeStorage.setItem(info.title, info.activated);
-  	}
-
-  	openPage(page) {
-		// Reset the content nav to have just this page
-		// we wouldn't want the back button to show in this scenario
-	    this.nav.setRoot(page.component);
+		this.dataProvider.setAddiction(addiction.id, addiction.activated).then(() => {
+			this.events.publish('addictions:updated');
+		});
   	}
 }
