@@ -103,7 +103,15 @@ export class DataProvider {
 	saveDay(day: Day) {
 		return new Promise((resolve, reject) => {
 			if (day.id === 0) {
-				new DbRequest(this.dbProvider).insert('days', [['date', this.sqlLiteDate(day.date)], ['note', day.note]]).execute()
+				new DbRequest(this.dbProvider).insert('days', [
+						['date', this.sqlLiteDate(day.date)],
+						['note', day.note],
+						['sleepless', day.sleepless],
+						['bedtime', day.bedtime],
+						['bedtime_duration', day.bedtimeDuration],
+						['waking', day.waking],
+						['waking_duration', day.wakingDuration]
+					]).execute()
 					.then((data: any) => {
 						day.id = data.insertId;
 						this.saveDayAddiction(day, resolve, reject);
@@ -127,7 +135,7 @@ export class DataProvider {
 					let indexedDays: Day[] = [];
 					for (var i = 0; i < data.rows.length; i++) {
 						let row = data.rows.item(i);
-						let day = new Day(row.id, new Date(row.date), row.note);
+						let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.bedtime, row.bedtimeDuration, row.waking, row.wakingDuration, row.hypnotic);
 						days.push(day);
 						indexedDays[day.id] = day;
 					}
@@ -147,6 +155,16 @@ export class DataProvider {
 						.catch((err) => reject(err));
 				})
 				.catch((err) => reject(err));
+		});
+	}
+
+	/*****
+	** Remove all
+	********/
+
+	dumpAll() {
+		return new Promise((resolve, reject) => {
+			this.dbProvider.dumpAll();
 		});
 	}
 }

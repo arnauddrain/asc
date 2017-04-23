@@ -13,6 +13,8 @@
         <ion-toggle [(ngModel)]="addiction.activated" (ionChange)="infoChange(addiction)" item-right></ion-toggle>
       </ion-item>
     </ion-list>
+
+    <a (click)="dumpAll()">Tout supprimer</a>
   </ion-content>
 
 </ion-menu>

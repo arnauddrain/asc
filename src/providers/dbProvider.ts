@@ -9,7 +9,7 @@ export class DbProvider {
 	dbOpened: boolean = false;
 	readyCallbacks: { (db: SQLite): void }[] = [];
 	
-	constructor(migrationProvider: MigrationProvider, public platform: Platform) {
+	constructor(private migrationProvider: MigrationProvider, public platform: Platform) {
 		
 		this.platform.ready().then(() => {
 			this.db = new SQLite();
@@ -38,6 +38,19 @@ export class DbProvider {
 			} else {
 				this.readyCallbacks.push(resolve);
 			}
+		});
+	}
+
+	dumpAll() {
+		this.getDb().then((db: SQLite) => {
+			db.transaction((tx) => {
+				tx.executeSql('DROP TABLE IF EXISTS addictions');
+				tx.executeSql('DROP TABLE IF EXISTS days');
+				tx.executeSql('DROP TABLE IF EXISTS dayAddictions');
+				tx.executeSql('DROP TABLE IF EXISTS nightBreaks');
+			}).then(() => {
+				this.migrationProvider.reset(db);
+			});
 		});
 	}
 }

@@ -14,3 +14,126 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+$blue: #1f83b3;
+
+.hidden {
+	display: none;
+}
+
+.toolbar-background-md {
+	background: $blue;
+}
+
+.bar-button-default-md {
+	color: white;
+}
+
+.toolbar-title-md {
+	color: white;
+}
+
+.header-md::after {
+	background-image: none;
+}
+
+ion-card {
+	border-radius: 15px !important;
+}
+
+ion-card-header {
+	background: $blue !important;
+	color: white !important;
+}
+
+.to-fill ion-card-header {
+	background: #dddedd !important;
+}
+
+.card-header-md {
+	padding: 10px 16px;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+ion-card-content {
+	text-align: center;
+}
+
+.button-fill-now {
+	margin-top: 20px;
+	padding: 20px 30px;
+	background: $blue;
+	color: white;
+	border-radius: 5px;
+	box-shadow: none;
+	transition: none;
+}
+
+.card-content-md {
+	padding: 13px 0;
+}
+
+.addictions {
+	padding: 0;
+}
+
+.addiction {
+	border-bottom: 1px solid #cccccc;
+	padding: 10px 0px;
+}
+
+.addiction:last-child {
+	border-bottom: none;
+}
+
+.addiction.Sommeil {
+	color: #1f83b3;
+}
+
+.addiction.Ecrans {
+	color: #e9cf48;
+}
+
+.addiction.Cannabis {
+	color: #52b360;
+}
+
+.addiction.Notes {
+	color: #6ac5ea;
+}
+
+.addiction-name {
+	text-align: center;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.addiction ion-col:nth-child(2) {
+	text-align: left;
+}
+
+.addiction h3.addiction-value {
+	font-weight: bold;
+	color: inherit;
+}
+
+.card-md h3 {
+	font-size: 2rem;
+}
+
+.note-content {
+	color: black;
+}
+
+.range-md .range-bar-active{
+	background: #f39b80;
+}
+
+.range-md .range-knob {
+	border: 1px solid #bdbdbd;
+	width: 25px;
+	height: 25px;
+	top: 10px;
+	left: 10px;
+}

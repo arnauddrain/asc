@@ -12,6 +12,49 @@
 </ion-header>
 
 <ion-content>
+	<ion-card>
+		<ion-card-header>
+			Sommeil
+		</ion-card-header>
+		<ion-card-content>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Nuit blanche</ion-label>
+						<ion-checkbox type="checkbox" [(ngModel)]="day.sleepless"></ion-checkbox>	
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Heure de mise au lit</ion-label>
+						<ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="day.bedtime"></ion-datetime>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Durée d'endormissement</ion-label>
+						<ion-input type="number" [(ngModel)]="day.bedtimeDuration"></ion-input> minutes
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Heure de réveil</ion-label>
+						<ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="day.waking"></ion-datetime>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label>Durée de sortie du lit</ion-label>
+						<ion-input type="number" [(ngModel)]="day.wakingDuration"></ion-input> minutes
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-card-content>
+	</ion-card>
 	<ion-card *ngFor="let dayAddiction of day.dayAddictions" [hidden]="!dayAddiction.addiction.activated">
 		<ion-card-header>
 			{{ dayAddiction.addiction.name }}

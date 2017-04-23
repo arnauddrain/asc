@@ -52,6 +52,19 @@ export class Home {
  		'Décembre'
  	];
 
+ 	calculateSleep(day: Day) {
+ 		let startTime = day.bedtime.split(':');
+ 		let endTime = day.waking.split(':');
+ 		let minutes = parseInt(startTime[1]) - parseInt(endTime[1]);
+ 		let retenue = (minutes < 0) ? 1 : 0;
+ 		minutes = Math.abs(minutes);
+ 		let hour = parseInt(startTime[0]) - parseInt(endTime[0]) + retenue;
+ 		let time = hour + "h";
+ 		if (minutes)
+ 			time += minutes;
+ 		return time;
+ 	}
+
  	formatDate(date: Date) {
  		return this.dayNames[date.getDay()] + ' ' + date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
  	}
@@ -60,21 +73,20 @@ export class Home {
 	** Go through all the days and look if they exists in database
 	*/
 	checkDays() {
-		this.days = [];
 		this.dataProvider.getDays()
 			.then((days) => {
+				this.days = [];
 				let now = new Date();
 				let date = new Date(this.startDate);
-				while (date.getTime() <= now.getTime()) {
+				while (date.getTime() < now.getTime()) {
 					let currentDate = new Date(date.getTime());
 					//if we find the day in database
-					if (days.length > 0 && Math.round(days[0].date.getTime() / 86400000) == Math.round(currentDate.getTime() / 86400000)) {
+					if (days.length > 0 && Math.ceil(days[0].date.getTime() / 86400000) == Math.ceil(currentDate.getTime() / 86400000)) {
 						this.days.unshift(days[0]);
-						console.log(days[0]);
 						days.shift();
 					}
 					else {
-						let day = new Day(0, currentDate, '');
+						let day = new Day(0, currentDate, '', false, "23:00", 0, "07:00", 0, null);
 						this.dataProvider.createDay(day).catch((err) => console.log(err));
 						this.days.unshift(day);
 					}

@@ -9,28 +9,46 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let day of days">
+  <ion-card *ngFor="let day of days" [ngClass]="(!day.id) ? 'to-fill' : ''" (click)="goToForm($event, day)">
 
     <ion-card-header>
-      Journée et nuit du {{ formatDate(day.date) }}
+      {{ formatDate(day.date) }}
     </ion-card-header>
 
     <ion-card-content>
 
-      <button ion-button *ngIf="!day.id" (click)="goToForm($event, day)">
+      <button ion-button *ngIf="!day.id" (click)="goToForm($event, day)" class="button-fill-now">
         Remplir maintenant
       </button>
 
       <div *ngIf="day.id">
-        <ion-grid>
-          <ion-row *ngFor="let dayAddiction of day.dayAddictions">
-            <ion-col col-2 *ngIf="dayAddiction.addiction.activated">
-              {{ dayAddiction.addiction.name }}
+        <ion-grid class="addictions">
+          <ion-row class="addiction Sommeil">
+            <ion-col>
+              <img [src]="'assets/img/Sommeil.png'">
+              <div class="addiction-name">Sommeil</div>
             </ion-col>
-            <ion-col col-10 *ngIf="dayAddiction.addiction.activated">
+            <ion-col style="flex: 4">
+              <h3 class="addiction-value">{{ calculateSleep(day) }} de sommeil</h3>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngFor="let dayAddiction of day.dayAddictions" class="addiction" [ngClass]="[dayAddiction.addiction.name, (dayAddiction.addiction.activated) ? '' : 'hidden']">
+            <ion-col>
+              <img [src]="'assets/img/' + dayAddiction.addiction.name + '.png'">
+              <div class="addiction-name">{{ dayAddiction.addiction.name }}</div>
+            </ion-col>
+            <ion-col style="flex: 4">
               <ion-row>
                 <ion-col col-12>
-                  {{ dayAddiction.value }}
+                  <h3 class="addiction-value">
+                    <span *ngIf="dayAddiction.addiction.name == 'Ecran'">
+                      {{ dayAddiction.value }} heures d'écrans
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
+                      {{ dayAddiction.value }} joints
+                    </span>
+                  </h3>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -53,14 +71,17 @@
               </ion-row>
             </ion-col>
           </ion-row>
-          <ion-row>
-            Note : {{ day.note }}
+
+          <ion-row class="addiction Notes">
+            <ion-col>
+              <img [src]="'assets/img/Notes.png'">
+              <div class="addiction-name">Notes</div>
+            </ion-col>
+            <ion-col style="flex: 4" class="note-content">
+              {{ day.note }}
+            </ion-col>
           </ion-row>
         </ion-grid>
-
-        <button ion-button (click)="goToForm($event, day)">
-          Editer
-        </button>
       </div>
       
     </ion-card-content>

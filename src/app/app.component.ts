@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar, Splashscreen  } from 'ionic-native';
 
 import { Home } from '../pages/home/home';
 import { DataProvider } from '../providers/dataProvider';
 import { Addiction } from '../entities/addiction';
+
 
 @Component({
 	templateUrl: 'app.html'
@@ -17,7 +19,7 @@ export class MyApp {
 
 	addictions: Addiction[] = [];
 
- 	constructor(public platform: Platform, private dataProvider: DataProvider, public events: Events) {
+ 	constructor(public platform: Platform, private dataProvider: DataProvider, public events: Events, public storage: Storage) {
 	    this.platform.ready().then(() => {
 			StatusBar.styleDefault();
 			Splashscreen.hide();
@@ -31,5 +33,9 @@ export class MyApp {
 		this.dataProvider.setAddiction(addiction.id, addiction.activated).then(() => {
 			this.events.publish('addictions:updated');
 		});
+  	}
+
+  	dumpAll() {
+  		this.storage.set('startDate', null).then(() => this.dataProvider.dumpAll());
   	}
 }
