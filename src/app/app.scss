@@ -21,19 +21,19 @@ $blue: #1f83b3;
 	display: none;
 }
 
-.toolbar-background-md {
+.toolbar-background {
 	background: $blue;
 }
 
-.bar-button-default-md {
+.bar-button-default {
 	color: white;
 }
 
-.toolbar-title-md {
+.toolbar-title {
 	color: white;
 }
 
-.header-md::after {
+.header::after {
 	background-image: none;
 }
 
@@ -50,7 +50,7 @@ ion-card-header {
 	background: #dddedd !important;
 }
 
-.card-header-md {
+.card-header {
 	padding: 10px 16px;
 	font-size: 2rem;
 	font-weight: bold;
@@ -70,7 +70,7 @@ ion-card-content {
 	transition: none;
 }
 
-.card-content-md {
+.card-content {
 	padding: 13px 0;
 }
 
@@ -89,10 +89,18 @@ ion-card-content {
 
 .addiction.Sommeil {
 	color: #1f83b3;
+
+	.progress {
+		background: #1f83b3;
+	}
 }
 
 .addiction.Ecrans {
 	color: #e9cf48;
+
+	.progress {
+		background: #e9cf48;
+	}
 }
 
 .addiction.Cannabis {
@@ -118,7 +126,7 @@ ion-card-content {
 	color: inherit;
 }
 
-.card-md h3 {
+.card h3 {
 	font-size: 2rem;
 }
 
@@ -126,14 +134,18 @@ ion-card-content {
 	color: black;
 }
 
-.range-md .range-bar-active{
-	background: #f39b80;
+.progress {
+	height: 18px;
+    border-radius: 9px;
+    margin-top: 5px;
 }
 
-.range-md .range-knob {
-	border: 1px solid #bdbdbd;
-	width: 25px;
-	height: 25px;
-	top: 10px;
-	left: 10px;
+.time-icons {
+	img {
+		width: 90%;
+	}
+
+	ion-col {
+		text-align: center;
+	}
 }

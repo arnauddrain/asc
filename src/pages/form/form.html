@@ -15,6 +15,9 @@
 	<ion-card>
 		<ion-card-header>
 			Sommeil
+			<div class="image-container">
+				<img src="assets/img/Sommeil-form.png" height="150">
+			</div>
 		</ion-card-header>
 		<ion-card-content>
 			<ion-row>
@@ -81,7 +84,7 @@
 				</ion-row>
 			</ion-grid>
 			{{dayAddiction.value}}
-			<ion-range [(ngModel)]="dayAddiction.value"></ion-range>
+			<ion-range [(ngModel)]="dayAddiction.value" max="24"></ion-range>
 		</ion-card-content>
 	</ion-card>
 	<ion-card>

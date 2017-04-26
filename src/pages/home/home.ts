@@ -55,10 +55,12 @@ export class Home {
  	calculateSleep(day: Day) {
  		let startTime = day.bedtime.split(':');
  		let endTime = day.waking.split(':');
- 		let minutes = parseInt(startTime[1]) - parseInt(endTime[1]);
+ 		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
+ 			endTime[0] = String(parseInt(endTime[0]) + 24);
+ 		let minutes = parseInt(endTime[1]) - parseInt(startTime[1]);
  		let retenue = (minutes < 0) ? 1 : 0;
  		minutes = Math.abs(minutes);
- 		let hour = parseInt(startTime[0]) - parseInt(endTime[0]) + retenue;
+ 		let hour = parseInt(endTime[0]) - parseInt(startTime[0]) + retenue;
  		let time = hour + "h";
  		if (minutes)
  			time += minutes;
@@ -86,7 +88,7 @@ export class Home {
 						days.shift();
 					}
 					else {
-						let day = new Day(0, currentDate, '', false, "23:00", 0, "07:00", 0, null);
+						let day = new Day(0, currentDate, '', false, "21:00", 0, "07:00", 0, null);
 						this.dataProvider.createDay(day).catch((err) => console.log(err));
 						this.days.unshift(day);
 					}

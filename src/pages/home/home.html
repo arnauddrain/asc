@@ -17,7 +17,7 @@
 
     <ion-card-content>
 
-      <button ion-button *ngIf="!day.id" (click)="goToForm($event, day)" class="button-fill-now">
+      <button ion-button *ngIf="!day.id" class="button-fill-now">
         Remplir maintenant
       </button>
 
@@ -30,6 +30,7 @@
             </ion-col>
             <ion-col style="flex: 4">
               <h3 class="addiction-value">{{ calculateSleep(day) }} de sommeil</h3>
+              <div class="progress" [ngStyle]="{width: '50%'}"></div>
             </ion-col>
           </ion-row>
 
@@ -42,37 +43,39 @@
               <ion-row>
                 <ion-col col-12>
                   <h3 class="addiction-value">
-                    <span *ngIf="dayAddiction.addiction.name == 'Ecran'">
+                    <span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
                       {{ dayAddiction.value }} heures d'écrans
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
                       {{ dayAddiction.value }} joints
                     </span>
                   </h3>
+                  <div class="progress" [ngStyle]="{width: '50%'}"></div>
                 </ion-col>
               </ion-row>
-              <ion-row>
+              <ion-row class="time-icons">
                 <ion-col>
-                  <span *ngIf="dayAddiction.morning"><b>Matin</b></span>
-                  <span *ngIf="!dayAddiction.morning">Matin</span>
+                  <img *ngIf="dayAddiction.morning" src="assets/img/morning-on.png">
+                  <img *ngIf="!dayAddiction.morning" src="assets/img/morning-off.png">
                 </ion-col>
                 <ion-col>
-                  <span *ngIf="dayAddiction.afternoon"><b>Après-midi</b></span>
-                  <span *ngIf="!dayAddiction.afternoon">Après-midi</span>
+                  <img *ngIf="dayAddiction.afternoon" src="assets/img/afternoon-on.png">
+                  <img *ngIf="!dayAddiction.afternoon" src="assets/img/afternoon-off.png">
                 </ion-col>
                 <ion-col>
-                  <span *ngIf="dayAddiction.evening"><b>Soirée</b></span>
-                  <span *ngIf="!dayAddiction.evening">Soirée</span>
+                  <img *ngIf="dayAddiction.evening" src="assets/img/evening-on.png">
+                  <img *ngIf="!dayAddiction.evening" src="assets/img/evening-off.png">
                 </ion-col>
                 <ion-col>
-                  <span *ngIf="dayAddiction.night"><b>Nuit</b></span>
-                  <span *ngIf="!dayAddiction.night">Nuit</span>
+                  <img *ngIf="dayAddiction.night" src="assets/img/night-on.png">
+                  <img *ngIf="!dayAddiction.night" src="assets/img/night-off.png">
                 </ion-col>
+                <ion-col style="flex:3"></ion-col>
               </ion-row>
             </ion-col>
           </ion-row>
 
-          <ion-row class="addiction Notes">
+          <ion-row class="addiction Notes" [ngClass]="[(day.note) ? '' : 'hidden']">
             <ion-col>
               <img [src]="'assets/img/Notes.png'">
               <div class="addiction-name">Notes</div>

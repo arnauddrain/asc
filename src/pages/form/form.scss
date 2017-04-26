@@ -1,3 +1,32 @@
 page-form {
+	.range-md .range-bar-active{
+		background: #f39b80;
+	}
 
+	.range-md .range-knob {
+		border: 1px solid #bdbdbd;
+		width: 25px;
+		height: 25px;
+		top: 10px;
+		left: 10px;
+	}
+
+	ion-card-header {
+		height: 150px;
+		position: relative;
+		overflow: hidden;
+
+		.image-container {
+			height: 150px;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			left: 0;
+			text-align: center;
+
+			img {
+				display: inline;
+			}
+		}
+	}
 }
