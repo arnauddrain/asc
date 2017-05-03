@@ -28,12 +28,18 @@
               <img [src]="'assets/img/Sommeil.png'">
               <div class="addiction-name">Sommeil</div>
             </ion-col>
-            <ion-col style="flex: 4" *ngIf="!day.sleepless">
-              <h3 class="addiction-value">{{ calculateSleep(day) }} de sommeil</h3>
-              <div class="progress" [ngStyle]="{width: (calculateSleepTime(day) / (24 * 60)) * 100 + '%'}"></div>
-            </ion-col>
-            <ion-col style="flex: 4" *ngIf="day.sleepless">
-              <i>Nuit blanche</i>
+            <ion-col style="flex: 4">
+              <h3 class="addiction-value" *ngIf="!day.sleepless">{{ calculateSleep(day) }} de sommeil</h3>
+              <div class="progress" [ngStyle]="{width: (calculateSleepTime(day) / (24 * 60)) * 100 + '%'}" *ngIf="!day.sleepless"></div>
+              <i *ngIf="day.sleepless">Nuit blanche</i>
+              <ion-row *ngIf="day.withHypnotic">
+                <ion-col>
+                  <img src="assets/img/hypnoctics.png">
+                </ion-col>
+                <ion-col style="flex: 5" class="hypnotic">
+                  Hypnotique à {{ day.hypnotic.replace(':', 'h') }}
+                </ion-col>
+              </ion-row>
             </ion-col>
           </ion-row>
 
