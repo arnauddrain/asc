@@ -30,12 +30,37 @@ export class MyApp {
  	}
 
 	infoChange(addiction: Addiction) {
-		this.dataProvider.setAddiction(addiction.id, addiction.activated).then(() => {
-			this.events.publish('addictions:updated');
-		});
+		this.dataProvider.setAddiction(addiction.id, addiction.activated)
+			.then(() => {
+				this.events.publish('addictions:updated');
+			});
   	}
 
   	dumpAll() {
-  		this.storage.set('startDate', null).then(() => this.dataProvider.dumpAll());
+  		this.storage.set('startDate', null)
+	  		.then(() => {
+	  			console.log('start');
+	  			return this.dataProvider.dumpAll()
+	  		})
+	  		.then(() => {
+	  			console.log('then');
+	  			this.events.publish('addictions:updated');
+	  		});
+  	}
+
+  	addDay() {
+  		this.storage.get('startDate')
+  			.then((startDate) => {
+  				if (!startDate) {
+	  				startDate = new Date().toDateString();
+	  			} else {
+	  				startDate = new Date(startDate);
+	  			}
+	  			startDate.setDate(Number(startDate.getDate()) - 1);
+	  			return this.storage.set("startDate", startDate);
+  			})
+  			.then(() => {
+  				this.events.publish('addictions:updated');
+  			});
   	}
 }

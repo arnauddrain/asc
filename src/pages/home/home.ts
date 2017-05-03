@@ -22,7 +22,7 @@ export class Home {
 		storage.ready().then(() => {
 			this.initializeDate();
 			this.events.subscribe('addictions:updated', () => {
-				this.checkDays()
+				this.initializeDate();
 			});
 		});
  	}
@@ -67,6 +67,18 @@ export class Home {
  		return time;
  	}
 
+ 	calculateSleepTime(day: Day) {
+ 		let startTime = day.bedtime.split(':');
+ 		let endTime = day.waking.split(':');
+ 		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
+ 			endTime[0] = String(parseInt(endTime[0]) + 24);
+ 		let minutes = parseInt(endTime[1]) - parseInt(startTime[1]);
+ 		let retenue = (minutes < 0) ? 1 : 0;
+ 		minutes = Math.abs(minutes);
+ 		let hour = parseInt(endTime[0]) - parseInt(startTime[0]) + retenue;
+ 		return hour * 60 + minutes;
+ 	}
+
  	formatDate(date: Date) {
  		return this.dayNames[date.getDay()] + ' ' + date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
  	}
@@ -88,7 +100,7 @@ export class Home {
 						days.shift();
 					}
 					else {
-						let day = new Day(0, currentDate, '', false, "21:00", 0, "07:00", 0, null);
+						let day = new Day(0, currentDate, '', false, "21:00", 0, "07:00", 0, false, "20:00");
 						this.dataProvider.createDay(day).catch((err) => console.log(err));
 						this.days.unshift(day);
 					}

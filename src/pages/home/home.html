@@ -28,9 +28,12 @@
               <img [src]="'assets/img/Sommeil.png'">
               <div class="addiction-name">Sommeil</div>
             </ion-col>
-            <ion-col style="flex: 4">
+            <ion-col style="flex: 4" *ngIf="!day.sleepless">
               <h3 class="addiction-value">{{ calculateSleep(day) }} de sommeil</h3>
-              <div class="progress" [ngStyle]="{width: '50%'}"></div>
+              <div class="progress" [ngStyle]="{width: (calculateSleepTime(day) / (24 * 60)) * 100 + '%'}"></div>
+            </ion-col>
+            <ion-col style="flex: 4" *ngIf="day.sleepless">
+              <i>Nuit blanche</i>
             </ion-col>
           </ion-row>
 
@@ -50,7 +53,7 @@
                       {{ dayAddiction.value }} joints
                     </span>
                   </h3>
-                  <div class="progress" [ngStyle]="{width: '50%'}"></div>
+                  <div class="progress" [ngStyle]="{width: (dayAddiction.value / dayAddiction.addiction.maximum) * 100 + '%'}"></div>
                 </ion-col>
               </ion-row>
               <ion-row class="time-icons">

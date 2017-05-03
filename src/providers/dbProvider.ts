@@ -42,16 +42,17 @@ export class DbProvider {
 	}
 
 	dumpAll() {
-		this.getDb().then((db: SQLite) => {
-			db.transaction((tx) => {
-				tx.executeSql('DROP TABLE IF EXISTS addictions');
-				tx.executeSql('DROP TABLE IF EXISTS days');
-				tx.executeSql('DROP TABLE IF EXISTS dayAddictions');
-				tx.executeSql('DROP TABLE IF EXISTS nightBreaks');
-			}).then(() => {
-				this.migrationProvider.reset(db);
+		return this.getDb()
+			.then((db: SQLite) => {
+				return db.transaction((tx) => {
+					tx.executeSql('DROP TABLE IF EXISTS addictions');
+					tx.executeSql('DROP TABLE IF EXISTS days');
+					tx.executeSql('DROP TABLE IF EXISTS dayAddictions');
+					tx.executeSql('DROP TABLE IF EXISTS nightBreaks');
+				}).then(() => {
+					return this.migrationProvider.reset(db);
+				});
 			});
-		});
 	}
 }
 

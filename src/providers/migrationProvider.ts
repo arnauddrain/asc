@@ -7,13 +7,13 @@ export class MigrationProvider {
 
 	migrations: string[][] = [
 		[
-			'CREATE TABLE `addictions` (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL, activated BOOLEAN DEFAULT 0)',
-			'CREATE TABLE `days` (id INTEGER PRIMARY KEY, date DATE, note TEXT, sleepless BOOLEAN, bedtime TEXT, bedtime_duration INTEGER, waking TEXT, waking_duration INTEGER, hypnotic TEXT)',
+			'CREATE TABLE `addictions` (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL, activated BOOLEAN DEFAULT 0, maximum INTEGER)',
+			'CREATE TABLE `days` (id INTEGER PRIMARY KEY, date DATE, note TEXT, sleepless BOOLEAN, bedtime TEXT, bedtime_duration INTEGER, waking TEXT, waking_duration INTEGER, with_hypnotic BOOLEAN, hypnotic TEXT)',
 			'CREATE TABLE `dayAddictions` (id_addiction INTEGER, id_day INTEGER, morning BOOLEAN, afternoon BOOLEAN, evening BOOLEAN, night BOOLEAN, value INTEGER)',
 			'CREATE TABLE `nightBreaks` (id INTEGER PRIMARY KEY, id_day INTEGER, type VARCHAR(50), time TEXT, duration INTEGER)'
 		],
 		[
-			'INSERT INTO `addictions` (name, activated) VALUES ("Ecrans", 1), ("Cannabis", 0), ("Tabac", 0), ("Alcool", 0)'
+			'INSERT INTO `addictions` (name, activated, maximum) VALUES ("Ecrans", 1, 24), ("Cannabis", 0, 20), ("Tabac", 60, 0), ("Alcool", 0, 40)'
 		]
 	];
 
@@ -51,11 +51,12 @@ export class MigrationProvider {
 
 	migrate(db: SQLite) {
 		return new Promise<void>((resolve, reject) => {
-			this.subMigrate(resolve, reject, db);
+			return this.subMigrate(resolve, reject, db);
 		});
 	}
 
 	reset(db: SQLite) {
-		this.storage.set('version', 0).then(() => this.migrate(db));
+		return this.storage.set('version', 0)
+			.then(() => this.migrate(db));
 	}
 }

@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>{{ day.date.getDate() }} / {{ day.date.getMonth() + 1 }} / {{ day.date.getFullYear() }}</ion-title>
+		<ion-title>{{ formatDate(day.date) }}</ion-title>
 		<ion-buttons end>
 			<button ion-button (click)="done()" strong>
 				<span color="primary">
@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-	<ion-card>
+	<ion-card class="Sommeil">
 		<ion-card-header>
 			Sommeil
 			<div class="image-container">
@@ -27,8 +27,9 @@
 						<ion-checkbox type="checkbox" [(ngModel)]="day.sleepless"></ion-checkbox>	
 					</ion-item>
 				</ion-col>
+				<ion-col></ion-col>
 			</ion-row>
-			<ion-row>
+			<ion-row *ngIf="!day.sleepless">
 				<ion-col>
 					<ion-item>
 						<ion-label>Heure de mise au lit</ion-label>
@@ -38,11 +39,13 @@
 				<ion-col>
 					<ion-item>
 						<ion-label>Durée d'endormissement</ion-label>
-						<ion-input type="number" [(ngModel)]="day.bedtimeDuration"></ion-input> minutes
+						<ion-select [(ngModel)]="day.bedtimeDuration">
+							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+						</ion-select>
 					</ion-item>
 				</ion-col>
 			</ion-row>
-			<ion-row>
+			<ion-row *ngIf="!day.sleepless">
 				<ion-col>
 					<ion-item>
 						<ion-label>Heure de réveil</ion-label>
@@ -51,48 +54,116 @@
 				</ion-col>
 				<ion-col>
 					<ion-item>
-						<ion-label>Durée de sortie du lit</ion-label>
-						<ion-input type="number" [(ngModel)]="day.wakingDuration"></ion-input> minutes
+						<ion-label>Durée avant lever</ion-label>
+						<ion-select [(ngModel)]="day.wakingDuration">
+							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label>Prise d'hypnotiques</ion-label>
+						<ion-checkbox type="checkbox" [(ngModel)]="day.withHypnotic"></ion-checkbox>	
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row *ngIf="day.withHypnotic">
+				<ion-col>
+					<img class="hypnotic" src="assets/img/hypnoctics.png">
+				</ion-col>
+				<ion-col style="flex: 4">
+					<ion-item>
+						<ion-label>Heure de prise d'hypnotiques</ion-label>
+						<ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="day.hypnotic"></ion-datetime>
 					</ion-item>
 				</ion-col>
 			</ion-row>
 		</ion-card-content>
 	</ion-card>
-	<ion-card *ngFor="let dayAddiction of day.dayAddictions" [hidden]="!dayAddiction.addiction.activated">
+	<ion-card *ngFor="let dayAddiction of day.dayAddictions" [hidden]="!dayAddiction.addiction.activated" [ngClass]="dayAddiction.addiction.name">
 		<ion-card-header>
 			{{ dayAddiction.addiction.name }}
+			<div class="image-container">
+				<img [src]="'assets/img/' + dayAddiction.addiction.name + '-form.png'" height="150">
+			</div>
 		</ion-card-header>
 		<ion-card-content>
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						Matin :<br>
-						<ion-checkbox [(ngModel)]="dayAddiction.morning"></ion-checkbox>
+						<ion-item>
+							<ion-label>
+								<img *ngIf="dayAddiction.morning" src="assets/img/morning-on.png">
+								<img *ngIf="!dayAddiction.morning" src="assets/img/morning-off.png">
+							</ion-label>
+							<ion-checkbox [(ngModel)]="dayAddiction.morning" class="hidden-checkbox"></ion-checkbox>
+						</ion-item>
+						Matin
 					</ion-col>
 					<ion-col>
-						Après-midi :<br>
-						<ion-checkbox [(ngModel)]="dayAddiction.afternoon"></ion-checkbox>
+						<ion-item>
+							<ion-label>
+								<img *ngIf="dayAddiction.afternoon" src="assets/img/afternoon-on.png">
+								<img *ngIf="!dayAddiction.afternoon" src="assets/img/afternoon-off.png">
+							</ion-label>
+							<ion-checkbox [(ngModel)]="dayAddiction.afternoon" class="hidden-checkbox"></ion-checkbox>
+						</ion-item>
+						Après-midi
 					</ion-col>
 					<ion-col>
-						Soirée :<br>
-						<ion-checkbox [(ngModel)]="dayAddiction.evening"></ion-checkbox>
+						<ion-item>
+							<ion-label>
+								<img *ngIf="dayAddiction.evening" src="assets/img/evening-on.png">
+								<img *ngIf="!dayAddiction.evening" src="assets/img/evening-off.png">
+							</ion-label>
+							<ion-checkbox [(ngModel)]="dayAddiction.evening" class="hidden-checkbox"></ion-checkbox>
+						</ion-item>
+						Soirée
 					</ion-col>
 					<ion-col>
-						Nuit :<br>
-						<ion-checkbox [(ngModel)]="dayAddiction.night"></ion-checkbox>
+						<ion-item>
+							<ion-label>
+								<img *ngIf="dayAddiction.night" src="assets/img/night-on.png">
+								<img *ngIf="!dayAddiction.night" src="assets/img/night-off.png">
+							</ion-label>
+							<ion-checkbox [(ngModel)]="dayAddiction.night" class="hidden-checkbox"></ion-checkbox>
+						</ion-item>
+						Nuit
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col style="text-align: left">
+						<span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
+	                      Temps total d'écrans
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
+	                      Nombre de joints dans la journée
+	                    </span>
+					</ion-col>
+					<ion-col style="text-align: right">
+						<span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
+							{{dayAddiction.value}} heures
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
+							{{dayAddiction.value}} joints
+	                    </span>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
-			{{dayAddiction.value}}
-			<ion-range [(ngModel)]="dayAddiction.value" max="24"></ion-range>
+			<ion-range [(ngModel)]="dayAddiction.value" [max]="dayAddiction.addiction.maximum"></ion-range>
 		</ion-card-content>
 	</ion-card>
-	<ion-card>
+	<ion-card class="Notes">
 		<ion-card-header>
 			Note
+			<div class="image-container">
+				<img src="assets/img/Notes-form.png" height="150">
+			</div>
 		</ion-card-header>
 		<ion-card-content>
-			<ion-input [(ngModel)]="day.note"></ion-input>
+			<ion-input [(ngModel)]="day.note" placeholder="Ecrivez une note..."></ion-input>
 		</ion-card-content>
 	</ion-card>
 </ion-content>

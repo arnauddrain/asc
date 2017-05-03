@@ -1,9 +1,9 @@
 page-form {
-	.range-md .range-bar-active{
+	.range .range-bar-active{
 		background: #f39b80;
 	}
 
-	.range-md .range-knob {
+	.range .range-knob {
 		border: 1px solid #bdbdbd;
 		width: 25px;
 		height: 25px;
@@ -28,5 +28,49 @@ page-form {
 				display: inline;
 			}
 		}
+	}
+
+	.Sommeil {
+		ion-card-header {
+			background: $Sommeil;
+		}
+
+		.input-wrapper {
+			display: block;
+
+			ion-label {
+				text-align: left;
+				overflow: inherit;
+				white-space: inherit;
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.Cannabis {
+		ion-card-header {
+			background: $Cannabis;
+		}
+	}
+
+	.Ecrans {
+		ion-card-header {
+			background: $Ecrans;
+		}
+	}
+
+	.Notes {
+		ion-card-header {
+			background: $Notes;
+		}
+	}
+
+	ion-label {
+		text-align: center;
+	}
+
+	ion-label img, img.hypnotic {
+		display: inline;
+		width: 70%;
 	}
 }

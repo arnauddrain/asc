@@ -15,8 +15,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-$blue: #1f83b3;
-
 .hidden {
 	display: none;
 }
@@ -42,7 +40,7 @@ ion-card {
 }
 
 ion-card-header {
-	background: $blue !important;
+	background: $blue;
 	color: white !important;
 }
 
@@ -88,27 +86,27 @@ ion-card-content {
 }
 
 .addiction.Sommeil {
-	color: #1f83b3;
+	color: $Sommeil;
 
 	.progress {
-		background: #1f83b3;
+		background: $Sommeil;
 	}
 }
 
 .addiction.Ecrans {
-	color: #e9cf48;
+	color: $Ecrans;
 
 	.progress {
-		background: #e9cf48;
+		background: $Ecrans;
 	}
 }
 
 .addiction.Cannabis {
-	color: #52b360;
+	color: $Cannabis;
 }
 
 .addiction.Notes {
-	color: #6ac5ea;
+	color: $Notes;
 }
 
 .addiction-name {
@@ -148,4 +146,22 @@ ion-card-content {
 	ion-col {
 		text-align: center;
 	}
+}
+
+.hidden-checkbox {
+	width: 0;
+	margin: 0 !important;
+	overflow: hidden;
+}
+
+ion-navbar .text {
+	color: white;
+}
+
+.range-knob {
+	background: white !important;
+}
+
+ion-select {
+	max-width: 100%;
 }

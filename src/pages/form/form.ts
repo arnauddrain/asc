@@ -11,6 +11,25 @@ import { Day } from '../../entities/day';
 export class Form {
 	day: Day;
 
+	monthNames: string[] = [
+ 		'Janvier',
+ 		'Février',
+ 		'Mars',
+ 		'Avril',
+ 		'Mai',
+ 		'Juin',
+ 		'Juillet',
+ 		'Août',
+ 		'Septembre',
+ 		'Octobre',
+ 		'Novembre',
+ 		'Décembre'
+ 	];
+
+ 	formatDate(date: Date) {
+ 		return date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
+ 	}
+
 	constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataProvider: DataProvider) {
 		// If we navigated to this page, we will have an item available as a nav param
 		this.day = navParams.get('day');

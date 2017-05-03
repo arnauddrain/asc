@@ -10,11 +10,16 @@ export class Day {
 		public bedtimeDuration: number,
 		public waking: string,
 		public wakingDuration: number,
-		public hypnotic: Date,
+		public withHypnotic: any,
+		public hypnotic: string,
 		public dayAddictions: DayAddiction[] = []) {
 		if (sleepless === "false")
 			this.sleepless = false;
 		else
 			this.sleepless = sleepless;
+		if (withHypnotic === "false")
+			this.withHypnotic = false;
+		else
+			this.withHypnotic = withHypnotic;
 	}
 }

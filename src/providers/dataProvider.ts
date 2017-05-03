@@ -20,7 +20,7 @@ export class DataProvider {
 					let addictions: Addiction[] = [];
 					for (var i = 0; i < data.rows.length; i++) {
 						let addiction = data.rows.item(i);
-						addictions.push(new Addiction(addiction.id, addiction.name, addiction.activated));
+						addictions.push(new Addiction(addiction.id, addiction.name, addiction.activated, addiction.maximum));
 					}
 					resolve(addictions);
 				})
@@ -110,7 +110,9 @@ export class DataProvider {
 						['bedtime', day.bedtime],
 						['bedtime_duration', day.bedtimeDuration],
 						['waking', day.waking],
-						['waking_duration', day.wakingDuration]
+						['waking_duration', day.wakingDuration],
+						['with_hypnotic', day.withHypnotic],
+						['hypnotic', day.hypnotic]
 					]).execute()
 					.then((data: any) => {
 						day.id = data.insertId;
@@ -135,7 +137,7 @@ export class DataProvider {
 					let indexedDays: Day[] = [];
 					for (var i = 0; i < data.rows.length; i++) {
 						let row = data.rows.item(i);
-						let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.bedtime, row.bedtimeDuration, row.waking, row.wakingDuration, row.hypnotic);
+						let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.bedtime, row.bedtimeDuration, row.waking, row.wakingDuration, row.with_hypnotic, row.hypnotic);
 						days.push(day);
 						indexedDays[day.id] = day;
 					}
@@ -146,7 +148,7 @@ export class DataProvider {
 						.then((data: any) => {
 							for (var i = 0; i < data.rows.length; i++) {
 								let row = data.rows.item(i);
-								let addiction = new Addiction(row.id_addiction, row.name, row.activated)
+								let addiction = new Addiction(row.id_addiction, row.name, row.activated, row.maximum);
 								let dayAddiction = new DayAddiction(addiction, row.morning, row.afternoon, row.evening, row.night, row.value);
 								indexedDays[row.id_day].dayAddictions.push(dayAddiction);
 							}
@@ -164,7 +166,8 @@ export class DataProvider {
 
 	dumpAll() {
 		return new Promise((resolve, reject) => {
-			this.dbProvider.dumpAll();
+			return this.dbProvider.dumpAll()
+				.then(() => resolve());
 		});
 	}
 }
