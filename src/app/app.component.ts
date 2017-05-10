@@ -4,6 +4,7 @@ import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar, Splashscreen  } from 'ionic-native';
 
 import { Home } from '../pages/home/home';
+import { Agenda } from '../pages/agenda/agenda';
 import { DataProvider } from '../providers/dataProvider';
 import { Addiction } from '../entities/addiction';
 
@@ -34,6 +35,10 @@ export class MyApp {
 			.then(() => {
 				this.events.publish('addictions:updated');
 			});
+  	}
+
+  	goToAgenda() {
+  		this.nav.setRoot(Agenda);
   	}
 
   	dumpAll() {

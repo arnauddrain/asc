@@ -4,16 +4,18 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Home } from '../pages/home/home';
 import { Form } from '../pages/form/form';
+import { Agenda } from '../pages/agenda/agenda';
 
-import { DbProvider } from '../providers/dbProvider';
 import { DataProvider } from '../providers/dataProvider';
+import { DbProvider } from '../providers/dbProvider';
 import { MigrationProvider } from '../providers/migrationProvider';
 
 @NgModule({
   declarations: [
     MyApp,
     Home,
-    Form
+    Form,
+    Agenda
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -22,12 +24,13 @@ import { MigrationProvider } from '../providers/migrationProvider';
   entryComponents: [
     MyApp,
     Home,
-    Form
+    Form,
+    Agenda
   ],
   providers: [
     Storage,
-    DbProvider,
     DataProvider,
+    DbProvider,
     MigrationProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
