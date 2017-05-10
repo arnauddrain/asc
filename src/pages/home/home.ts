@@ -57,31 +57,28 @@ export class Home {
  		let endTime = day.waking.split(':');
  		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
  			endTime[0] = String(parseInt(endTime[0]) + 24);
- 		let minutes = parseInt(endTime[1]) - parseInt(startTime[1]);
- 		let retenue = (minutes < 0) ? -1 : 0;
- 		if (retenue)
- 			minutes += 60;
- 		let hour = parseInt(endTime[0]) - parseInt(startTime[0]) + retenue;
+ 		let time = parseInt(endTime[1]) - parseInt(startTime[1]);
+ 		time += parseInt(endTime[0]) * 60 - parseInt(startTime[0]) * 60;
  		day.nightBreaks.forEach((nightBreak) => {
- 			;
+ 			if (nightBreak.type == 0)
+ 				time -= nightBreak.duration;
+ 			else
+ 				time += nightBreak.duration;
  		});
- 		return {hour: hour, minutes: minutes}
+ 		return time;
  	}
 
  	getSleep(day: Day) {
  		let sleep = this.calculateSleep(day);
- 		let time = sleep.hour + "h";
- 		if (sleep.minutes) {
- 			if (sleep.minutes < 10)
+ 		let hour = Math.floor(sleep / 60);
+ 		let minutes = sleep % 60;
+ 		let time = hour + "h";
+ 		if (minutes) {
+ 			if (minutes < 10)
  				time += "0";
- 			time += sleep.minutes;
+ 			time += minutes;
  		}
  		return time;
- 	}
-
- 	getSleepTime(day: Day) {
- 		let sleep = this.calculateSleep(day);
- 		return sleep.hour * 60 + sleep.minutes;
  	}
 
  	formatDate(date: Date) {
