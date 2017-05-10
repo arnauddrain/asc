@@ -58,25 +58,30 @@ export class Home {
  		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
  			endTime[0] = String(parseInt(endTime[0]) + 24);
  		let minutes = parseInt(endTime[1]) - parseInt(startTime[1]);
- 		let retenue = (minutes < 0) ? 1 : 0;
- 		minutes = Math.abs(minutes);
+ 		let retenue = (minutes < 0) ? -1 : 0;
+ 		if (retenue)
+ 			minutes += 60;
  		let hour = parseInt(endTime[0]) - parseInt(startTime[0]) + retenue;
- 		let time = hour + "h";
- 		if (minutes)
- 			time += minutes;
+ 		day.nightBreaks.forEach((nightBreak) => {
+ 			;
+ 		});
+ 		return {hour: hour, minutes: minutes}
+ 	}
+
+ 	getSleep(day: Day) {
+ 		let sleep = this.calculateSleep(day);
+ 		let time = sleep.hour + "h";
+ 		if (sleep.minutes) {
+ 			if (sleep.minutes < 10)
+ 				time += "0";
+ 			time += sleep.minutes;
+ 		}
  		return time;
  	}
 
- 	calculateSleepTime(day: Day) {
- 		let startTime = day.bedtime.split(':');
- 		let endTime = day.waking.split(':');
- 		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
- 			endTime[0] = String(parseInt(endTime[0]) + 24);
- 		let minutes = parseInt(endTime[1]) - parseInt(startTime[1]);
- 		let retenue = (minutes < 0) ? 1 : 0;
- 		minutes = Math.abs(minutes);
- 		let hour = parseInt(endTime[0]) - parseInt(startTime[0]) + retenue;
- 		return hour * 60 + minutes;
+ 	getSleepTime(day: Day) {
+ 		let sleep = this.calculateSleep(day);
+ 		return sleep.hour * 60 + sleep.minutes;
  	}
 
  	formatDate(date: Date) {

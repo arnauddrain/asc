@@ -103,16 +103,53 @@ ion-card-content {
 
 .addiction.Cannabis {
 	color: $Cannabis;
+
+	.progress {
+		background: $Cannabis;
+	}
 }
 
-.addiction.Notes {
-	color: $Notes;
+.addiction.Note {
+	color: $Note;
+}
+
+.addiction.Alcool {
+	color: $Alcool;
+
+	.progress {
+		background: $Alcool;
+	}
+}
+
+.addiction.Tabac {
+	color: $Tabac;
+
+	.progress {
+		background: $Tabac;
+	}
+}
+
+.addiction.Benzodiazepine {
+	color: $Benzodiazepine;
+
+	.progress {
+		background: $Benzodiazepine;
+	}
+}
+
+.addiction.Cocaine {
+	color: $Cocaine;
+
+	.progress {
+		background: $Cocaine;
+	}
 }
 
 .addiction-name {
 	text-align: center;
 	font-weight: bold;
 	margin-top: 10px;
+	word-break: break-all;
 }
 
 .addiction ion-col:nth-child(2) {

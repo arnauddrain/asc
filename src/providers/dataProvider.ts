@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DbProvider, DbRequest } from './dbProvider';
 
+import { NightBreak } from '../entities/nightBreak';
 import { DayAddiction } from '../entities/dayAddiction';
 import { Addiction } from '../entities/addiction';
 import { Day } from '../entities/day';
@@ -42,16 +43,16 @@ export class DataProvider {
 		return new Promise<DayAddiction[]>((resolve, reject) => {
 			this.getAddictions()
 				.then((addictions) => {
-					addictions.map((addiction) => day.dayAddictions.push(new DayAddiction(addiction)));
+					addictions.forEach((addiction) => day.dayAddictions.push(new DayAddiction(addiction)));
 					resolve();
 				})
 				.catch((err) => reject(err));
 		});
 	}
 
-	saveDayAddiction(day: Day, resolve, reject) {
+	saveDayAddiction(day: Day) {
 		let request = new DbRequest(this.dbProvider).startTransaction();
-		day.dayAddictions.map((dayAddiction) => {
+		day.dayAddictions.forEach((dayAddiction) => {
 			request.insert('dayAddictions', [
 				['id_addiction', String(dayAddiction.addiction.id)],
 				['id_day', String(day.id)],
@@ -62,20 +63,26 @@ export class DataProvider {
 				['value', String(dayAddiction.value)]
 			]);
 		});
-		request.executeTransaction()
-			.then(() => resolve(day))
-			.catch((err) => reject(err));
+		return request.executeTransaction();;
 	}
 
-	updateDayAddiction(day: Day, resolve, reject) {
-		new DbRequest(this.dbProvider).update('days', [['note', day.note]])
+	updateDayAddiction(day: Day) {
+		return new DbRequest(this.dbProvider).update('days', [
+				['note', day.note],
+				['sleepless', day.sleepless],
+				['bedtime', day.bedtime],
+				['bedtime_duration', String(day.bedtimeDuration)],
+				['waking', day.waking],
+				['waking_duration', String(day.wakingDuration)],
+				['with_hypnotic', day.withHypnotic],
+				['hypnotic', day.hypnotic]
+			])
 			.where('id', '=', String(day.id))
 			.execute()
 			.then((data) => {
-				console.log(data);
-				let request = new DbRequest(this.dbProvider).startTransaction();
-				day.dayAddictions.map((dayAddiction) => {
-					request.update('dayAddictions', [
+				let transaction = new DbRequest(this.dbProvider).startTransaction();
+				day.dayAddictions.forEach((dayAddiction) => {
+					transaction.update('dayAddictions', [
 						['morning', String(dayAddiction.morning)],
 						['afternoon', String(dayAddiction.afternoon)],
 						['evening', String(dayAddiction.evening)],
@@ -83,10 +90,27 @@ export class DataProvider {
 						['value', String(dayAddiction.value)]
 					]).where('id_day', '=', String(day.id)).and('id_addiction', '=', String(dayAddiction.addiction.id));
 				});
-				request.executeTransaction()
-					.then(() => resolve(day))
-					.catch((err) => reject(err));
+				return transaction.executeTransaction();
 			});
+	}
+
+	private saveNightBreaks(day: Day) {
+		return new DbRequest(this.dbProvider)
+			.delete('nightBreaks')
+			.where('id_day', '=', String(day.id))
+			.execute()
+			.then(() => {
+				let transaction = new DbRequest(this.dbProvider).startTransaction();
+				day.nightBreaks.forEach((nightBreak) => {
+					transaction.insert('nightBreaks', [
+						['id_day', String(day.id)],
+						['type', String(nightBreak.type)],
+						['time', String(nightBreak.time)],
+						['duration', String(nightBreak.duration)],
+					]);
+				});
+				return transaction.executeTransaction();
+			})
 	}
 
 	private sqlLiteDate(date: Date): string {
@@ -108,19 +132,24 @@ export class DataProvider {
 						['note', day.note],
 						['sleepless', day.sleepless],
 						['bedtime', day.bedtime],
-						['bedtime_duration', day.bedtimeDuration],
+						['bedtime_duration', String(day.bedtimeDuration)],
 						['waking', day.waking],
-						['waking_duration', day.wakingDuration],
+						['waking_duration', String(day.wakingDuration)],
 						['with_hypnotic', day.withHypnotic],
 						['hypnotic', day.hypnotic]
 					]).execute()
 					.then((data: any) => {
 						day.id = data.insertId;
-						this.saveDayAddiction(day, resolve, reject);
+						return this.saveDayAddiction(day);
 					})
+					.then(() => this.saveNightBreaks(day))
+					.then(() => resolve())
 					.catch((err) => reject(err));
 			} else {
-				this.updateDayAddiction(day, resolve, reject);
+				this.updateDayAddiction(day)
+					.then(() => this.saveNightBreaks(day))
+					.then(() => resolve())
+					.catch((err) => reject(err));
 			}
 		});
 	}
@@ -137,7 +166,7 @@ export class DataProvider {
 					let indexedDays: Day[] = [];
 					for (var i = 0; i < data.rows.length; i++) {
 						let row = data.rows.item(i);
-						let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.bedtime, row.bedtimeDuration, row.waking, row.wakingDuration, row.with_hypnotic, row.hypnotic);
+						let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.bedtime, row.bedtime_duration, row.waking, row.waking_duration, row.with_hypnotic, row.hypnotic);
 						days.push(day);
 						indexedDays[day.id] = day;
 					}
@@ -151,6 +180,14 @@ export class DataProvider {
 								let addiction = new Addiction(row.id_addiction, row.name, row.activated, row.maximum);
 								let dayAddiction = new DayAddiction(addiction, row.morning, row.afternoon, row.evening, row.night, row.value);
 								indexedDays[row.id_day].dayAddictions.push(dayAddiction);
+							}
+							return new DbRequest(this.dbProvider).get('nightBreaks').execute();
+						})
+						.then((data: any) => {
+							for (var i = 0; i < data.rows.length; i++) {
+								let row = data.rows.item(i);
+								let nightBreak = new NightBreak(row.type, row.time, row.duration);
+								indexedDays[row.id_day].nightBreaks.push(nightBreak);
 							}
 							resolve(days);
 						})

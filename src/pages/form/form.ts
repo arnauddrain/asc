@@ -3,6 +3,7 @@ import { ViewController, NavParams } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/dataProvider';
 import { Day } from '../../entities/day';
+import { NightBreak } from '../../entities/nightBreak';
 
 @Component({
 	selector: 'page-form',
@@ -31,9 +32,15 @@ export class Form {
  	}
 
 	constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataProvider: DataProvider) {
-		// If we navigated to this page, we will have an item available as a nav param
 		this.day = navParams.get('day');
-		console.log(this.day);
+	}
+
+	addNightBreak(type: number) {
+		this.day.nightBreaks.push(new NightBreak(type, "00:00", 0));
+	}
+
+	deleteNightBreak(index: number) {
+		this.day.nightBreaks.splice(index, 1);
 	}
 
 	done() {

@@ -67,7 +67,7 @@ export class DbRequest {
 
 	constructor(private dbProvider: DbProvider) {}
 
-	private addRequest(request: string, params: string[]) {
+	private addRequest(request: string, params: string[] = []) {
 		if (this.isInTransaction) {
 			this.transactionRequests.push(request);
 			this.transactionParams.push(params);
@@ -106,6 +106,11 @@ export class DbRequest {
 	getFirst(tableName: string, selector: [string, string]) {
 		let request = 'SELECT * FROM ' + tableName + ' WHERE ' + selector[0] + ' = ?';
 		this.addRequest(request, [String(selector[1])]);
+		return this;
+	}
+
+	delete(tableName: string) {
+		this.addRequest('DELETE FROM ' + tableName);
 		return this;
 	}
 

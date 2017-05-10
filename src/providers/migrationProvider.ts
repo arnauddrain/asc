@@ -13,7 +13,13 @@ export class MigrationProvider {
 			'CREATE TABLE `nightBreaks` (id INTEGER PRIMARY KEY, id_day INTEGER, type VARCHAR(50), time TEXT, duration INTEGER)'
 		],
 		[
-			'INSERT INTO `addictions` (name, activated, maximum) VALUES ("Ecrans", 1, 24), ("Cannabis", 0, 20), ("Tabac", 60, 0), ("Alcool", 0, 40)'
+			'INSERT INTO `addictions` (name, activated, maximum) VALUES \
+				("Ecrans", 1, 24), \
+				("Cannabis", 1, 20), \
+				("Tabac", 0, 60), \
+				("Alcool", 0, 40), \
+				("Benzodiazepine", 0, 10), \
+				("Cocaine", 0, 20)'
 		]
 	];
 

@@ -39,11 +39,9 @@ export class MyApp {
   	dumpAll() {
   		this.storage.set('startDate', null)
 	  		.then(() => {
-	  			console.log('start');
 	  			return this.dataProvider.dumpAll()
 	  		})
 	  		.then(() => {
-	  			console.log('then');
 	  			this.events.publish('addictions:updated');
 	  		});
   	}

@@ -29,8 +29,8 @@
               <div class="addiction-name">Sommeil</div>
             </ion-col>
             <ion-col style="flex: 4">
-              <h3 class="addiction-value" *ngIf="!day.sleepless">{{ calculateSleep(day) }} de sommeil</h3>
-              <div class="progress" [ngStyle]="{width: (calculateSleepTime(day) / (24 * 60)) * 100 + '%'}" *ngIf="!day.sleepless"></div>
+              <h3 class="addiction-value" *ngIf="!day.sleepless">{{ getSleep(day) }} de sommeil</h3>
+              <div class="progress" [ngStyle]="{width: (getSleepTime(day) / (24 * 60)) * 100 + '%'}" *ngIf="!day.sleepless"></div>
               <i *ngIf="day.sleepless">Nuit blanche</i>
               <ion-row *ngIf="day.withHypnotic">
                 <ion-col>
@@ -58,6 +58,18 @@
                     <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
                       {{ dayAddiction.value }} joints
                     </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Alcool'">
+                      {{ dayAddiction.value }} verres
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Tabac'">
+                      {{ dayAddiction.value }} cigarettes
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
+                      {{ dayAddiction.value }} grammes
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
+                      {{ dayAddiction.value }} doses
+                    </span>
                   </h3>
                   <div class="progress" [ngStyle]="{width: (dayAddiction.value / dayAddiction.addiction.maximum) * 100 + '%'}"></div>
                 </ion-col>
@@ -84,10 +96,10 @@
             </ion-col>
           </ion-row>
 
-          <ion-row class="addiction Notes" [ngClass]="[(day.note) ? '' : 'hidden']">
+          <ion-row class="addiction Note" [ngClass]="[(day.note) ? '' : 'hidden']">
             <ion-col>
-              <img [src]="'assets/img/Notes.png'">
-              <div class="addiction-name">Notes</div>
+              <img [src]="'assets/img/Note.png'">
+              <div class="addiction-name">Note</div>
             </ion-col>
             <ion-col style="flex: 4" class="note-content">
               {{ day.note }}

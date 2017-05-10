@@ -1,4 +1,5 @@
 import { DayAddiction } from './dayAddiction';
+import { NightBreak } from './nightBreak';
 
 export class Day {
 	constructor(
@@ -12,7 +13,8 @@ export class Day {
 		public wakingDuration: number,
 		public withHypnotic: any,
 		public hypnotic: string,
-		public dayAddictions: DayAddiction[] = []) {
+		public dayAddictions: DayAddiction[] = [],
+		public nightBreaks: NightBreak[] = []) {
 		if (sleepless === "false")
 			this.sleepless = false;
 		else

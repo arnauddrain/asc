@@ -80,6 +80,35 @@
 					</ion-item>
 				</ion-col>
 			</ion-row>
+			<ion-row *ngFor="let nightBreak of day.nightBreaks; let i = index">
+				<ion-col style="flex:5">
+					<ion-item>
+						<ion-label *ngIf="nightBreak.type == 0">Heure du réveil nocturne</ion-label>
+						<ion-label *ngIf="nightBreak.type == 1">Heure de la sieste</ion-label>
+						<ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="nightBreak.time"></ion-datetime>
+					</ion-item>
+				</ion-col>
+				<ion-col style="flex: 4">
+					<ion-item>
+						<ion-label *ngIf="nightBreak.type == 0">Durée du réveil</ion-label>
+						<ion-label *ngIf="nightBreak.type == 1">Durée de la sieste</ion-label>
+						<ion-select [(ngModel)]="nightBreak.duration">
+							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col style="flex: 1">
+					<a (click)="deleteNightBreak(i)">X</a>
+				</ion-col>
+			</ion-row>
+			<ion-row class="add-sleep">
+				<ion-col (click)="addNightBreak(0)" *ngIf="!day.sleepless">
+					<span>+ Ajouter un réveil dans la nuit</span>
+				</ion-col>
+				<ion-col (click)="addNightBreak(1)">
+					<span>+ Ajouter une sieste</span>
+				</ion-col>
+			</ion-row>
 		</ion-card-content>
 	</ion-card>
 	<ion-card *ngFor="let dayAddiction of day.dayAddictions" [hidden]="!dayAddiction.addiction.activated" [ngClass]="dayAddiction.addiction.name">
@@ -141,6 +170,18 @@
 	                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
 	                      Nombre de joints dans la journée
 	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Alcool'">
+	                      Nombre de verres dans la journée
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Tabac'">
+	                      Nombre de cigarettes dans la journée
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
+	                      Nombre de grammes dans la journée
+	                    </span>
+	                   	<span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
+	                      Nombre de doses dans la journée
+	                    </span>
 					</ion-col>
 					<ion-col style="text-align: right">
 						<span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
@@ -149,17 +190,29 @@
 	                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
 							{{dayAddiction.value}} joints
 	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Alcool'">
+							{{dayAddiction.value}} verres
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Tabac'">
+							{{dayAddiction.value}} cigarettes
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
+							{{dayAddiction.value}} grammes
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
+							{{dayAddiction.value}} doses
+	                    </span>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
 			<ion-range [(ngModel)]="dayAddiction.value" [max]="dayAddiction.addiction.maximum"></ion-range>
 		</ion-card-content>
 	</ion-card>
-	<ion-card class="Notes">
+	<ion-card class="Note">
 		<ion-card-header>
 			Note
 			<div class="image-container">
-				<img src="assets/img/Notes-form.png" height="150">
+				<img src="assets/img/Note-form.png" height="150">
 			</div>
 		</ion-card-header>
 		<ion-card-content>

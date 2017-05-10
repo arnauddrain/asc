@@ -59,9 +59,33 @@ page-form {
 		}
 	}
 
-	.Notes {
+	.Alcool {
 		ion-card-header {
-			background: $Notes;
+			background: $Alcool;
+		}
+	}
+
+	.Tabac {
+		ion-card-header {
+			background: $Tabac;
+		}
+	}
+
+	.Cocaine {
+		ion-card-header {
+			background: $Cocaine;
+		}
+	}
+
+	.Benzodiazepine {
+		ion-card-header {
+			background: $Benzodiazepine;
+		}
+	}
+
+	.Note {
+		ion-card-header {
+			background: $Note;
 		}
 	}
 
@@ -72,5 +96,20 @@ page-form {
 	ion-label img, img.hypnotic {
 		display: inline;
 		width: 70%;
+	}
+
+	.add-sleep {
+		color: $blue;
+
+		padding: 0 10px;
+
+		ion-col:first-child {
+			text-align: left;
+			flex: 9;
+		}
+		ion-col:last-child {
+			text-align: right;
+			flex: 7;
+		}
 	}
 }
