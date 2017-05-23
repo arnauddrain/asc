@@ -16,10 +16,10 @@ export class MigrationProvider {
 			'INSERT INTO `addictions` (name, activated, maximum) VALUES \
 				("Ecrans", 1, 24), \
 				("Cannabis", 1, 20), \
-				("Tabac", 0, 60), \
+				("Tabac", 0, 40), \
 				("Alcool", 0, 40), \
 				("Benzodiazepine", 0, 10), \
-				("Cocaine", 0, 20)'
+				("Cocaine", 0, 6)'
 		]
 	];
 
