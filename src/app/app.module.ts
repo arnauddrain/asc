@@ -1,5 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Home } from '../pages/home/home';
@@ -18,7 +20,9 @@ import { MigrationProvider } from '../providers/migrationProvider';
     Agenda
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,10 +32,10 @@ import { MigrationProvider } from '../providers/migrationProvider';
     Agenda
   ],
   providers: [
-    Storage,
     DataProvider,
     DbProvider,
     MigrationProvider,
+    ScreenOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

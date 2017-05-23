@@ -30,7 +30,7 @@
             </ion-col>
             <ion-col style="flex: 4">
               <h3 class="addiction-value" *ngIf="!day.sleepless">{{ getSleep(day) }} de sommeil</h3>
-              <div class="progress" [ngStyle]="{width: (calculateSleep(day) / (24 * 60)) * 100 + '%'}" *ngIf="!day.sleepless"></div>
+              <div class="progress" [ngStyle]="{width: (day.sleepDuration() / (24 * 60)) * 100 + '%'}" *ngIf="!day.sleepless"></div>
               <i *ngIf="day.sleepless">Nuit blanche</i>
               <ion-row *ngIf="day.withHypnotic">
                 <ion-col>

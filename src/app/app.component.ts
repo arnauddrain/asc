@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, ModalController } from 'ionic-angular';
 import { StatusBar, Splashscreen  } from 'ionic-native';
 
 import { Home } from '../pages/home/home';
@@ -17,10 +17,15 @@ export class MyApp {
 
 	rootPage: any = Home;
 
-
 	addictions: Addiction[] = [];
 
- 	constructor(public platform: Platform, private dataProvider: DataProvider, public events: Events, public storage: Storage) {
+ 	constructor(
+ 		public platform: Platform,
+ 		private dataProvider: DataProvider,
+ 		public events: Events,
+ 		public storage: Storage,
+ 		public modalCtrl: ModalController
+ 	) {
 	    this.platform.ready().then(() => {
 			StatusBar.styleDefault();
 			Splashscreen.hide();
@@ -38,7 +43,8 @@ export class MyApp {
   	}
 
   	goToAgenda() {
-  		this.nav.setRoot(Agenda);
+  		let modal = this.modalCtrl.create(Agenda);
+	    modal.present();
   	}
 
   	dumpAll() {

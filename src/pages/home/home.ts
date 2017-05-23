@@ -14,7 +14,6 @@ declare var cordova: any;
 	templateUrl: 'home.html'
 })
 export class Home {
-
 	startDate: string;
 	days: Day[] = [];
 
@@ -52,24 +51,8 @@ export class Home {
  		'Décembre'
  	];
 
- 	calculateSleep(day: Day) {
- 		let startTime = day.bedtime.split(':');
- 		let endTime = day.waking.split(':');
- 		if (endTime[0] < startTime[0] || (endTime[0] == startTime[0] && endTime[1] < startTime[1]))
- 			endTime[0] = String(parseInt(endTime[0]) + 24);
- 		let time = parseInt(endTime[1]) - parseInt(startTime[1]);
- 		time += parseInt(endTime[0]) * 60 - parseInt(startTime[0]) * 60;
- 		day.nightBreaks.forEach((nightBreak) => {
- 			if (nightBreak.type == 0)
- 				time -= nightBreak.duration;
- 			else
- 				time += nightBreak.duration;
- 		});
- 		return time;
- 	}
-
  	getSleep(day: Day) {
- 		let sleep = this.calculateSleep(day);
+ 		let sleep = day.sleepDuration();
  		let hour = Math.floor(sleep / 60);
  		let minutes = sleep % 60;
  		let time = hour + "h";

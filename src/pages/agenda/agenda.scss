@@ -1,3 +1,92 @@
 page-agenda {
-	
+
+	.scroll-content {
+		background: #e9e9e9;
+	}
+
+	.agenda {
+		background: white;
+		border-radius: 10px;
+		width: 98%;
+		margin: auto;
+		margin-top: 10px;
+	}
+
+	.agenda-row {
+		display: flex;
+		width: 100%;
+		flex-flow: row wrap;
+		justify-content: space-around;
+		border-bottom: 1px solid #c1c1bf;
+		height: 40px;
+	}
+
+	.agenda-row.header {
+		height: 50px;
+
+		.agenda-label {
+			padding-right: 2px;
+		}
+	}
+
+	.agenda-row:last-child {
+		border-bottom: none;
+	}
+
+	.agenda-cell {
+		flex: 1;
+		color: #797978;
+		font-size: 14px;
+		border-right: 1px solid #c1c1bf;
+	}
+
+	.agenda-cell.agenda-label {
+		flex: 3;
+		display: flex;
+
+		span {
+			margin: auto;
+		}
+	}
+
+	.agenda-cell.agenda-times {
+		flex: 14;
+		display: flex;
+		position: relative;
+
+		span {
+			flex: 1;
+		}
+	}
+
+	.header .agenda-cell.agenda-times {
+		font-weight: bold;
+		padding-top: 30px;
+		padding-left: 10px;
+		padding-right: 10px;
+		text-align: center;
+	}
+
+	.sommeil {
+		position: absolute;
+		left: 150px;
+		width: 200px;
+		height: 30px;
+		background: rgb(91, 181, 104);
+		top: 5px;
+	}
+
+	.sommeil.awake {
+		background: rgba(91, 181, 104, 0.5);
+	}
+
+	.sommeil:first-of-type {
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
+
+	.sommeil:last-of-type {
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
 }

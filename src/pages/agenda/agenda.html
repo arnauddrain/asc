@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+  	<ion-title>Agenda de sommeil</ion-title>
+    <ion-buttons start>
+		<button ion-button (click)="back()">
+			<span color="primary" showWhen="ios">
+				Retour
+			</span>
+			<ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+		</button>
+	</ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="agenda">
+		<div class="agenda-row header">
+			<div class="agenda-cell agenda-label"></div>
+			<div class="agenda-cell agenda-times">
+				<span>20h</span>
+				<span>22h</span>
+				<span>00h</span>
+				<span>02h</span>
+				<span>04h</span>
+				<span>06h</span>
+				<span>08h</span>
+				<span>10h</span>
+				<span>12h</span>
+				<span>14h</span>
+				<span>16h</span>
+				<span>18h</span>
+				<span>20h</span>
+			</div>
+		</div>
+		<div class="agenda-row" *ngFor="let day of days">
+			<div class="agenda-cell agenda-label"><span>{{ formatDate(day.date) }}</span></div>
+			<div class="agenda-cell agenda-times">
+				<div *ngIf="day.bedtimeDuration > 0" class="sommeil awake" [ngStyle]="{width: computeBedtimeWidth(day), left: computeBedtimeLeft(day)}"></div>
+				<div class="sommeil" [ngStyle]="{width: computeSleepWidth(day), left: computeSleepLeft(day)}"></div>
+				<div *ngIf="day.wakingDuration > 0" class="sommeil awake" [ngStyle]="{width: computeWakingWidth(day), left: computeWakingLeft(day)}"></div>
+				<span *ngFor="let test of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]"></span>
+			</div>
+		</div>
+	</div>
+
+</ion-content>
