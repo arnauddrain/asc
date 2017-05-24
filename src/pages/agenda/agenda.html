@@ -36,9 +36,26 @@
 		<div class="agenda-row" *ngFor="let day of days">
 			<div class="agenda-cell agenda-label"><span>{{ formatDate(day.date) }}</span></div>
 			<div class="agenda-cell agenda-times">
-				<div *ngIf="day.bedtimeDuration > 0" class="sommeil awake" [ngStyle]="{width: computeBedtimeWidth(day), left: computeBedtimeLeft(day)}"></div>
-				<div class="sommeil" [ngStyle]="{width: computeSleepWidth(day), left: computeSleepLeft(day)}"></div>
-				<div *ngIf="day.wakingDuration > 0" class="sommeil awake" [ngStyle]="{width: computeWakingWidth(day), left: computeWakingLeft(day)}"></div>
+				<div *ngIf="day.bedtimeDuration > 0"
+					class="sommeil awake"
+					[ngStyle]="{width: computeWidth(day.bedtimeDuration), left: computeLeft(day.bedtime)}">
+				</div>
+				<div class="sommeil"
+					[ngStyle]="{width: computeSleepWidth(day), left: computeSleepLeft(day)}">
+				</div>
+				<div *ngIf="day.wakingDuration > 0"
+					class="sommeil awake"
+					[ngStyle]="{width: computeWidth(day.wakingDuration), left: computeLeft(day.waking)}">
+				</div>
+				<span *ngFor="let break of day.nightBreaks"
+					class="break"
+					[ngClass]="(break.type == 0) ? 'wakeup' : 'nape'"
+					[ngStyle]="{width: computeWidth(break.duration), left: computeLeft(break.time)}">
+				</span>
+				<img *ngIf="day.withHypnotic"
+					class="hypnotic"
+					src="assets/img/hypnoctic.png"
+					[ngStyle]="{left: computeLeft(day.hypnotic)}">
 				<span *ngFor="let test of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]"></span>
 			</div>
 		</div>

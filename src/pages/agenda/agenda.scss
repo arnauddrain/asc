@@ -29,20 +29,29 @@ page-agenda {
 		}
 	}
 
-	.agenda-row:last-child {
+	.agenda-row:last-of-type {
 		border-bottom: none;
 	}
 
-	.agenda-cell {
+	.agenda-cell, .agenda-cell span {
 		flex: 1;
 		color: #797978;
 		font-size: 14px;
 		border-right: 1px solid #c1c1bf;
 	}
 
+	.agenda-cell:last-of-type, .agenda-cell span:last-of-type {
+		border-right: 0px;
+	}
+
+	.header span {
+		border-right: 0;
+	}
+
 	.agenda-cell.agenda-label {
 		flex: 3;
 		display: flex;
+		padding-left: 10px;
 
 		span {
 			margin: auto;
@@ -67,10 +76,8 @@ page-agenda {
 		text-align: center;
 	}
 
-	.sommeil {
+	.sommeil, .break {
 		position: absolute;
-		left: 150px;
-		width: 200px;
 		height: 30px;
 		background: rgb(91, 181, 104);
 		top: 5px;
@@ -80,13 +87,24 @@ page-agenda {
 		background: rgba(91, 181, 104, 0.5);
 	}
 
-	.sommeil:first-of-type {
+	.sommeil:first-of-type, .break.nape {
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 	}
 
-	.sommeil:last-of-type {
+	.sommeil:last-of-type, .break.nape {
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
+	}
+
+	.wakeup {
+		background: white;
+		z-index: 2;
+	}
+
+	.hypnotic {
+		position: absolute;
+		height: 30px;
+		top: 5px;
 	}
 }

@@ -21,7 +21,7 @@ export class DataProvider {
 					let addictions: Addiction[] = [];
 					for (var i = 0; i < data.rows.length; i++) {
 						let addiction = data.rows.item(i);
-						addictions.push(new Addiction(addiction.id, addiction.name, addiction.activated, addiction.maximum));
+						addictions.push(new Addiction(addiction.id, addiction.name, addiction.activated, addiction.maximum, addiction.step));
 					}
 					resolve(addictions);
 				})
@@ -177,7 +177,7 @@ export class DataProvider {
 						.then((data: any) => {
 							for (var i = 0; i < data.rows.length; i++) {
 								let row = data.rows.item(i);
-								let addiction = new Addiction(row.id_addiction, row.name, row.activated, row.maximum);
+								let addiction = new Addiction(row.id_addiction, row.name, row.activated, row.maximum, row.step);
 								let dayAddiction = new DayAddiction(addiction, row.morning, row.afternoon, row.evening, row.night, row.value);
 								indexedDays[row.id_day].dayAddictions.push(dayAddiction);
 							}

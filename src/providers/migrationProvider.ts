@@ -7,19 +7,19 @@ export class MigrationProvider {
 
 	migrations: string[][] = [
 		[
-			'CREATE TABLE `addictions` (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL, activated BOOLEAN DEFAULT 0, maximum INTEGER)',
+			'CREATE TABLE `addictions` (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL, activated BOOLEAN DEFAULT 0, maximum INTEGER, step INTEGER DEFAULT 1)',
 			'CREATE TABLE `days` (id INTEGER PRIMARY KEY, date DATE, note TEXT, sleepless BOOLEAN, bedtime TEXT, bedtime_duration INTEGER, waking TEXT, waking_duration INTEGER, with_hypnotic BOOLEAN, hypnotic TEXT)',
-			'CREATE TABLE `dayAddictions` (id_addiction INTEGER, id_day INTEGER, morning BOOLEAN, afternoon BOOLEAN, evening BOOLEAN, night BOOLEAN, value INTEGER)',
+			'CREATE TABLE `dayAddictions` (id_addiction INTEGER, id_day INTEGER, morning BOOLEAN, afternoon BOOLEAN, evening BOOLEAN, night BOOLEAN, value FLOAT)',
 			'CREATE TABLE `nightBreaks` (id INTEGER PRIMARY KEY, id_day INTEGER, type VARCHAR(50), time TEXT, duration INTEGER)'
 		],
 		[
-			'INSERT INTO `addictions` (name, activated, maximum) VALUES \
-				("Ecrans", 1, 24), \
-				("Cannabis", 1, 20), \
-				("Tabac", 0, 40), \
-				("Alcool", 0, 40), \
-				("Benzodiazepine", 0, 10), \
-				("Cocaine", 0, 6)'
+			'INSERT INTO `addictions` (name, activated, maximum, step) VALUES \
+				("Ecrans", 1, 24, 1), \
+				("Cannabis", 1, 20, 1), \
+				("Tabac", 0, 40, 1), \
+				("Alcool", 0, 40, 1), \
+				("Benzodiazepine", 0, 10, 0.5), \
+				("Cocaine", 0, 5, 0.25)'
 		]
 	];
 

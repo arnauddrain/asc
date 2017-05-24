@@ -63,32 +63,15 @@ export class Agenda {
 		return (time / (24 * 60) * 100) + '%';
  	}
 
- 	computeBedtimeWidth(day: Day) {
- 		return (day.bedtimeDuration / (24 * 60) * 100) + '%'
+ 	computeWidth(duration: number) {
+ 		return (duration / (24 * 60) * 100) + '%'
  	}
 
- 	computeBedtimeLeft(day: Day) {
- 		if (!day.bedtime) {
+ 	computeLeft(timeStart: string) {
+ 		if (!timeStart) {
  			return 0;
  		}
- 		let startTime = day.bedtime.split(':');
- 		let time = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
- 		if (parseInt(startTime[0]) < 20) {
-			time += 60 * 24;
-		}
-		time -= 60 * 20;
-		return (time / (24 * 60) * 100) + '%';
- 	}
-
- 	computeWakingWidth(day: Day) {
- 		return (day.wakingDuration / (24 * 60) * 100) + '%'
- 	}
-
- 	computeWakingLeft(day: Day) {
- 		if (!day.waking) {
- 			return 0;
- 		}
- 		let startTime = day.waking.split(':');
+ 		let startTime = timeStart.split(':');
  		let time = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
  		if (parseInt(startTime[0]) < 20) {
 			time += 60 * 24;
@@ -103,6 +86,7 @@ export class Agenda {
 	checkDays() {
 		this.dataProvider.getDays()
 			.then((days) => {
+				console.log(days);
 				this.days = [];
 				let now = new Date();
 				let date = new Date(this.startDate);
