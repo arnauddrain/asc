@@ -40,7 +40,11 @@
 					<ion-item>
 						<ion-label>Durée d'endormissement</ion-label>
 						<ion-select [(ngModel)]="day.bedtimeDuration">
-							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+							<ion-option [value]="number" *ngFor="let number of incrementValues">
+								<span *ngIf="number >= 60">{{Math.floor(number / 60)}} heures </span>
+								<span *ngIf="number >= 60 && number % 60">et </span>
+								<span *ngIf="number === 0 || number % 60">{{number % 60}} minutes</span>
+							</ion-option>
 						</ion-select>
 					</ion-item>
 				</ion-col>
@@ -56,7 +60,10 @@
 					<ion-item>
 						<ion-label>Durée avant lever</ion-label>
 						<ion-select [(ngModel)]="day.wakingDuration">
-							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+							<ion-option [value]="number" *ngFor="let number of incrementValues">
+								<span *ngIf="number >= 60">{{Math.floor(number / 60)}} heures et </span>
+								<span *ngIf="number === 0 || number % 60">{{number % 60}} minutes</span>
+							</ion-option>
 						</ion-select>
 					</ion-item>
 				</ion-col>
@@ -179,33 +186,33 @@
 	                    <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
 	                      Nombre de grammes dans la journée
 	                    </span>
-	                   	<span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
+	                   	<span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
 	                      Nombre de doses dans la journée
 	                    </span>
 					</ion-col>
 					<ion-col style="text-align: right">
 						<span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
-							{{dayAddiction.value}} heures
+							{{dayAddiction.value / 100}} heures
 	                    </span>
 	                    <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
-							{{dayAddiction.value}} joints
+							{{dayAddiction.value / 100}} joints
 	                    </span>
 	                    <span *ngIf="dayAddiction.addiction.name == 'Alcool'">
-							{{dayAddiction.value}} verres
+							{{dayAddiction.value / 100}} verres
 	                    </span>
 	                    <span *ngIf="dayAddiction.addiction.name == 'Tabac'">
-							{{dayAddiction.value}} cigarettes
+							{{dayAddiction.value / 100}} cigarettes
 	                    </span>
 	                    <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
-							{{dayAddiction.value}} grammes
+							{{dayAddiction.value / 100}} grammes
 	                    </span>
-	                    <span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
-							{{dayAddiction.value}} doses
+	                    <span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
+							{{dayAddiction.value / 100}} comprimés
 	                    </span>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
-			<ion-range [(ngModel)]="dayAddiction.value" [max]="dayAddiction.addiction.maximum" [step]="dayAddiction.addiction.step"></ion-range>
+			<ion-range [(ngModel)]="dayAddiction.value" [max]="dayAddiction.addiction.maximum * 100" [step]="dayAddiction.addiction.step * 100"></ion-range>
 		</ion-card-content>
 	</ion-card>
 	<ion-card class="Note">

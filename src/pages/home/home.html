@@ -53,25 +53,25 @@
                 <ion-col col-12>
                   <h3 class="addiction-value">
                     <span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
-                      {{ dayAddiction.value }} heures d'écrans
+                      {{ dayAddiction.value / 100 }} heures d'écrans
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Cannabis'">
-                      {{ dayAddiction.value }} joints
+                      {{ dayAddiction.value / 100 }} joints
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Alcool'">
-                      {{ dayAddiction.value }} verres
+                      {{ dayAddiction.value / 100 }} verres
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Tabac'">
-                      {{ dayAddiction.value }} cigarettes
+                      {{ dayAddiction.value / 100 }} cigarettes
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Cocaine'">
-                      {{ dayAddiction.value }} grammes
+                      {{ dayAddiction.value / 100 }} grammes
                     </span>
-                    <span *ngIf="dayAddiction.addiction.name == 'Benzodiazepine'">
-                      {{ dayAddiction.value }} doses
+                    <span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
+                      {{ dayAddiction.value / 100 }} comprimés
                     </span>
                   </h3>
-                  <div class="progress" [ngStyle]="{width: (dayAddiction.value / dayAddiction.addiction.maximum) * 100 + '%'}"></div>
+                  <div class="progress" [ngStyle]="{width: (dayAddiction.value / 100 / dayAddiction.addiction.maximum) * 100 + '%'}"></div>
                 </ion-col>
               </ion-row>
               <ion-row class="time-icons">

@@ -18,7 +18,7 @@ export class MigrationProvider {
 				("Cannabis", 1, 20, 1), \
 				("Tabac", 0, 40, 1), \
 				("Alcool", 0, 40, 1), \
-				("Benzodiazepine", 0, 10, 0.5), \
+				("Hors Prescription", 0, 10, 0.5), \
 				("Cocaine", 0, 5, 0.25)'
 		]
 	];

@@ -12,6 +12,10 @@ import { NightBreak } from '../../entities/nightBreak';
 export class Form {
 	day: Day;
 
+	Math = Math;
+
+	incrementValues = [0, 5, 10, 15, 20, 25, 30, 45, 60, 75, 90, 105, 120, 150, 180, 210, 240];
+
 	monthNames: string[] = [
  		'Janvier',
  		'Février',
