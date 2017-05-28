@@ -52,8 +52,9 @@ export class Agenda {
  			return 0;
  		}
  		let startTime = day.bedtime.split(':');
+ 		let endTime = day.waking.split(':');
  		let time = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
- 		if (parseInt(startTime[0]) < 20) {
+ 		if (startTime[0] < endTime[0] || (startTime[0] == endTime[0] && startTime[1] < endTime[1])) {
 			time += 60 * 24;
 		}
 		time -= 60 * 20;
