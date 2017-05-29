@@ -20,12 +20,13 @@ page-form {
 			height: 150px;
 			position: absolute;
 			bottom: 0;
-			width: 100%;
-			left: 0;
+			width: 200%;
+			left: -50%;
 			text-align: center;
 
 			img {
 				display: inline;
+				width: auto;
 			}
 		}
 	}
