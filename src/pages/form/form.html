@@ -61,7 +61,8 @@
 						<ion-label>Durée avant lever</ion-label>
 						<ion-select [(ngModel)]="day.wakingDuration">
 							<ion-option [value]="number" *ngFor="let number of incrementValues">
-								<span *ngIf="number >= 60">{{Math.floor(number / 60)}} heures et </span>
+								<span *ngIf="number >= 60">{{Math.floor(number / 60)}} heures </span>
+								<span *ngIf="number >= 60 && number % 60">et </span>
 								<span *ngIf="number === 0 || number % 60">{{number % 60}} minutes</span>
 							</ion-option>
 						</ion-select>
@@ -100,7 +101,11 @@
 						<ion-label *ngIf="nightBreak.type == 0">Durée du réveil</ion-label>
 						<ion-label *ngIf="nightBreak.type == 1">Durée de la sieste</ion-label>
 						<ion-select [(ngModel)]="nightBreak.duration">
-							<ion-option [value]="number * 5" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">{{number * 5}} minutes</ion-option>
+							<ion-option [value]="number" *ngFor="let number of incrementValues">
+								<span *ngIf="number >= 60">{{Math.floor(number / 60)}} heures </span>
+								<span *ngIf="number >= 60 && number % 60">et </span>
+								<span *ngIf="number === 0 || number % 60">{{number % 60}} minutes</span>
+							</ion-option>
 						</ion-select>
 					</ion-item>
 				</ion-col>
