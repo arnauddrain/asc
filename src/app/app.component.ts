@@ -2,9 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Nav, Platform, Events, ModalController } from 'ionic-angular';
 import { StatusBar, Splashscreen  } from 'ionic-native';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Home } from '../pages/home/home';
 import { Agenda } from '../pages/agenda/agenda';
+import { Settings } from '../pages/settings/settings';
 import { DataProvider } from '../providers/dataProvider';
 import { Addiction } from '../entities/addiction';
 
@@ -24,15 +26,54 @@ export class MyApp {
  		private dataProvider: DataProvider,
  		public events: Events,
  		public storage: Storage,
- 		public modalCtrl: ModalController
+ 		public modalCtrl: ModalController,
+ 		public localNotifications: LocalNotifications
  	) {
 	    this.platform.ready().then(() => {
 			StatusBar.styleDefault();
 			Splashscreen.hide();
+			this.configureNotifications();
 			this.dataProvider.getAddictions()
 				.then((addictions) => this.addictions = addictions)
 				.catch((err) => console.log(err));
     	});
+ 	}
+
+ 	launchNotifications() {
+ 		this.localNotifications.cancelAll().then(() => {
+ 			return this.storage.get('notificationstime');
+ 		})
+ 		.then((timeString) => {
+			let time = timeString.split(':');
+			let date = new Date();
+			if (date.getHours() > time[0] || (date.getHours() == time[0] && date.getMinutes() > time[1])) {
+				date.setDate(Number(date.getDate()) + 1);
+			}
+			date.setHours(time[0]);
+			date.setMinutes(time[1]);
+			date.setSeconds(0);
+			this.localNotifications.schedule({
+				title: 'Rydan',
+				text: 'Pensez à remplir vos consommations de la veille.',
+				at: date,
+				every: 'day'
+			});
+		});
+ 	}
+
+ 	configureNotifications() {
+ 		this.storage.get('notifications')
+	  		.then((notifications) => {
+	  			if (notifications === null) {
+	  				return this.storage.set('notifications', 'true').then(() => {
+	  					return this.storage.set('notificationstime', '10:00');
+	  				}).then(() => {
+	  					this.launchNotifications();
+	  				});
+	  			} else if (notifications === 'true') {
+	  				this.launchNotifications();
+	  			}
+	  		})
  	}
 
 	infoChange(addiction: Addiction) {
@@ -43,8 +84,11 @@ export class MyApp {
   	}
 
   	goToAgenda() {
-  		let modal = this.modalCtrl.create(Agenda);
-	    modal.present();
+  		this.modalCtrl.create(Agenda).present();
+  	}
+
+  	goToSettings() {
+  		this.modalCtrl.create(Settings).present();
   	}
 
   	dumpAll() {

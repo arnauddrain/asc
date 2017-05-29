@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^4.2.0-rc.0",
     "@angular/platform-server": "^4.2.0-rc.0",
     "@ionic-native/core": "^3.10.3",
+    "@ionic-native/local-notifications": "^3.10.3",
     "@ionic-native/screen-orientation": "^3.10.3",
     "@ionic/storage": "^2.0.1",
     "ionic-angular": "^3.2.1",
