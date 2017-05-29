@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { Home } from '../pages/home/home';
 import { Form } from '../pages/form/form';
 import { Agenda } from '../pages/agenda/agenda';
+import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
 
 import { DataProvider } from '../providers/dataProvider';
@@ -20,7 +21,8 @@ import { MigrationProvider } from '../providers/migrationProvider';
     Home,
     Form,
     Agenda,
-    Settings
+    Settings,
+    About
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { MigrationProvider } from '../providers/migrationProvider';
     Home,
     Form,
     Agenda,
-    Settings
+    Settings,
+    About
   ],
   providers: [
     DataProvider,

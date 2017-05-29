@@ -6,10 +6,10 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Home } from '../pages/home/home';
 import { Agenda } from '../pages/agenda/agenda';
+import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
 import { DataProvider } from '../providers/dataProvider';
 import { Addiction } from '../entities/addiction';
-
 
 @Component({
 	templateUrl: 'app.html'
@@ -89,6 +89,10 @@ export class MyApp {
 
   	goToSettings() {
   		this.modalCtrl.create(Settings).present();
+  	}
+
+  	goToAbout() {
+  		this.modalCtrl.create(About).present();
   	}
 
   	dumpAll() {

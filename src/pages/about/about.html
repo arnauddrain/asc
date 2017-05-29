@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>à propos</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="back()">
+        <span color="primary" showWhen="ios">
+          Retour
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h1>À propos</h1>
+
+  <p>Cette application a été conçue et développée par Benjamin Pitrat (Psychiatre, APHP) et Arnaud Drain (Développeur, Epitech).</p>
+  <p>Conçue comme un outil d’autonomisation du patient vis-à-vis de ses consommations et de son sommeil, elle a aussi comme vocation de s’intégrer dans la prise en charge de l’usager avec son professionnel de soins.</p>
+  <p>Enfin, une fonction d’export de données devrait permettre de l’intégrer à des protocoles de recherche novateurs dans les domaines de l’addictologie et des troubles du sommeil.</p>
+
+  <h2>Comment fonctionne l’application ?</h2>
+
+  <p>Dans le menu l’utilisateur peut choisir les domaines qu’il veut renseigner (sommeil, consommations).</p>
+  <p>Sur l’écran principal, en cliquent sur les vignettes correspondant aux jours d’utilisation, il peut alors remplir ses informations.</p>
+  <p>Cette saisie peut être reprise et corrigée autant de fois qu’il le souhaite.</p>
+  <p>La fonction agenda de sommeil permet de générer un agenda de sommeil que le patient peut utiliser avec son professionnel.</p>
+  <p>L’utilisation est au mieux utilisée en début de journée, le patient pouvant ainsi renseigner toutes les informations ayant trait à la journée et la nuit précédente.</p>
+  <p>La fonction de notification permet un rappel journalier (prévention des oublis et des données manquantes).</p>
+
+  <h2>Remerciements</h2>
+
+  <ul>
+    <li>Réseau Morphée (agenda de sommeil)</li>
+    <li>Adrien Pitrat (ergonomie et design)</li>
+    <li>Collégiale d’addictologie de l’APHP</li>
+    <li>Pr Amine Benyamina, CERTA</li>
+    <li>Pr Damien Léger, Hôtel Dieu</li>
+  </ul>
+</ion-content>
