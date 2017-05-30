@@ -104,7 +104,6 @@ export class Home {
 	  		.then((startDate) => {
 	  			if (!startDate) {
 	  				startDate = new Date().toDateString();
-	  				startDate.setDate(Number(startDate.getDate()) - 1);
 	  				this.storage.set("startDate", startDate);
 	  			}
 	  			this.startDate = startDate;

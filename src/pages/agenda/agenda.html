@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="agenda-row" *ngIf="days.length > 0">
-			<div class="agenda-cell agenda-label"><span>{{ formatDate(days[days.length - 1].date) }}</span></div>
+			<div class="agenda-cell agenda-label"><span>{{ formatDate(getLastDate()) }}</span></div>
 			<div class="agenda-cell agenda-times">
 				<span *ngFor="let break of days[days.length - 1].nightBreaks | onlynapes"
 					class="break nape"

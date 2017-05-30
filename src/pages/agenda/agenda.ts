@@ -42,6 +42,12 @@ export class Agenda {
 		return date.getDate() + ' / ' + tomorrow.getDate() + ' ' + this.monthNames[date.getMonth()] + '.';
 	}
 
+	getLastDate() {
+		let date = new Date(this.days[this.days.length - 1].date.getTime());
+		date.setDate(Number(date.getDate()) - 1)
+		return date;
+	}
+
  	computeSleepWidth(day: Day) {
  		return (day.sleepDuration() / (24 * 60) * 100) + '%'
  	}
