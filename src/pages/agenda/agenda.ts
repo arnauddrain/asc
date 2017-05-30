@@ -28,7 +28,6 @@ export class Agenda {
  		'Nov',
  		'Déc'
  	];
-
 	constructor(public viewCtrl: ViewController, public storage: Storage, private dataProvider: DataProvider, private screenOrientation: ScreenOrientation) {
 		//FIXME
 		//this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
@@ -81,13 +80,19 @@ export class Agenda {
 		return (time / (24 * 60) * 100) + '%';
  	}
 
+ 	getPreviousDaysNightBreaks(index) {
+ 		if (index == 0) {
+ 			return [];
+ 		}
+ 		return this.days[index - 1].nightBreaks;
+ 	}
+
 	/*
 	** Go through all the days and look if they exists in database
 	*/
 	checkDays() {
 		this.dataProvider.getDays()
 			.then((days) => {
-				console.log(days);
 				this.days = [];
 				let now = new Date();
 				let date = new Date(this.startDate);

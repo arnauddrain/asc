@@ -11,6 +11,9 @@ import { Agenda } from '../pages/agenda/agenda';
 import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
 
+import { OnlyNapesPipe } from '../pipes/onlyNapesPipe';
+import { OnlyWakeupsPipe } from '../pipes/onlyWakeupsPipe';
+
 import { DataProvider } from '../providers/dataProvider';
 import { DbProvider } from '../providers/dbProvider';
 import { MigrationProvider } from '../providers/migrationProvider';
@@ -22,7 +25,9 @@ import { MigrationProvider } from '../providers/migrationProvider';
     Form,
     Agenda,
     Settings,
-    About
+    About,
+    OnlyNapesPipe,
+    OnlyWakeupsPipe
   ],
   imports: [
     BrowserModule,

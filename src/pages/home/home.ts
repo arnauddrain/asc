@@ -27,13 +27,13 @@ export class Home {
  	}
 
  	dayNames: string[] = [
- 		'Dimanche',
- 		'Lundi',
- 		'Mardi',
- 		'Mercredi',
- 		'Jeudi',
- 		'Vendredi',
- 		'Samedi'
+ 		'dimanche',
+ 		'lundi',
+ 		'mardi',
+ 		'mercredi',
+ 		'jeudi',
+ 		'vendredi',
+ 		'samedi'
  	];
 
  	monthNames: string[] = [
@@ -65,7 +65,7 @@ export class Home {
  	}
 
  	formatDate(date: Date) {
- 		return this.dayNames[date.getDay()] + ' ' + date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
+ 		return 'Journée et nuit du ' + this.dayNames[date.getDay()] + ' ' + date.getDate() + ' ' + this.monthNames[date.getMonth()];
  	}
 
 	/*
@@ -104,6 +104,7 @@ export class Home {
 	  		.then((startDate) => {
 	  			if (!startDate) {
 	  				startDate = new Date().toDateString();
+	  				startDate.setDate(Number(startDate.getDate()) - 1);
 	  				this.storage.set("startDate", startDate);
 	  			}
 	  			this.startDate = startDate;
