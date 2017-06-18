@@ -65,7 +65,7 @@ export class Home {
  	}
 
  	formatDate(date: Date) {
- 		return 'Journée et nuit du ' + this.dayNames[date.getDay()] + ' ' + date.getDate() + ' ' + this.monthNames[date.getMonth()];
+ 		return 'Journée et nuit du ' + date.getDate() + ' ' + this.monthNames[date.getMonth()];
  	}
 
 	/*

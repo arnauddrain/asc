@@ -7,13 +7,9 @@
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="http://192.168.250.2:8100"/>
-  <allow-navigation href="http://192.168.250.2:8104"/>
-  <allow-navigation href="http://192.168.250.2:8101"/>
-  <allow-navigation href="http://192.168.250.2:8113"/>
-  <allow-navigation href="http://10.10.22.42:8100"/>
-  <allow-navigation href="http://192.168.11.50:8100"/>
+  <allow-navigation href="http://169.254.222.142:8100"/>
+  <allow-navigation href="http://169.254.195.240:8100"/>
   <allow-navigation href="http://169.254.44.148:8100"/>
-  <allow-navigation href="http://192.168.11.37:8100"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

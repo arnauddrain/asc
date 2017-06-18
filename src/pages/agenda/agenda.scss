@@ -70,13 +70,13 @@ page-agenda {
 
 		span {
 			flex: 1;
-		
-			+.border {
-				background: #e9e9e9;
-				border-right: none;
-				flex: 0.4;
-			}
 		}
+	}
+
+	.border {
+		background: #e9e9e9;
+		border-right: none;
+		width: 5%;
 	}
 
 	.header .agenda-cell.agenda-times {

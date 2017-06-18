@@ -25,7 +25,7 @@ export class Day {
 			this.withHypnotic = withHypnotic;
 	}
 
-	sleepDuration(): number {
+	sleepDuration(withBreaks: boolean = true): number {
 		if (!this.bedtime || !this.waking) {
 			return 0;
 		}
@@ -36,13 +36,15 @@ export class Day {
  		}
  		let time = parseInt(endTime[1]) - parseInt(startTime[1]);
  		time += parseInt(endTime[0]) * 60 - parseInt(startTime[0]) * 60;
- 		this.nightBreaks.forEach((nightBreak) => {
- 			if (nightBreak.type == 0) {
- 				time -= nightBreak.duration;
- 			} else {
- 				time += nightBreak.duration;
- 			}
- 		});
+ 		if (withBreaks) {	
+	 		this.nightBreaks.forEach((nightBreak) => {
+	 			if (nightBreak.type == 0) {
+	 				time -= nightBreak.duration;
+	 			} else {
+	 				time += nightBreak.duration;
+	 			}
+	 		});
+ 		}
  		if (this.bedtimeDuration > 0) {
 			time -= this.bedtimeDuration;
 		}

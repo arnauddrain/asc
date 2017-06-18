@@ -49,7 +49,7 @@ export class Agenda {
 	}
 
  	computeSleepWidth(day: Day) {
- 		return (day.sleepDuration() / (24 * 60) * 100) + '%'
+ 		return (day.sleepDuration(false) / (24 * 60) * 100) + '%'
  	}
 
  	computeSleepLeft(day: Day) {
