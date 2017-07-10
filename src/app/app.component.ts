@@ -20,6 +20,7 @@ export class MyApp {
 
 	rootPage: any = Home;
 
+	sleep: boolean = true;
 	addictions: Addiction[] = [];
 
  	constructor(
@@ -39,6 +40,7 @@ export class MyApp {
 			this.dataProvider.getAddictions()
 				.then((addictions) => this.addictions = addictions)
 				.catch((err) => console.log(err));
+			this.configureSleep();
     	});
  	}
 
@@ -63,6 +65,28 @@ export class MyApp {
 			});
 		});
  	}
+
+ 	configureSleep() {
+ 		this.storage.get('sleep')
+	  		.then((sleep) => {
+	  			if (sleep === null) {
+	  				return this.storage.set('sleep', 'true').then(() => {
+	  					this.sleep = true;
+	  				});
+	  			} else if (sleep === 'true') {
+	  				this.sleep = true;
+	  			} else {
+	  				this.sleep = false;
+	  			}
+	  		})
+ 	}
+
+ 	toggleSleep() {
+ 		console.log(this.sleep);
+		this.storage.set('sleep', this.sleep).then(() => {
+			this.events.publish('addictions:updated');
+		});
+  	}
 
  	configureNotifications() {
  		this.storage.get('notifications')

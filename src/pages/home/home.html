@@ -23,7 +23,7 @@
 
       <div *ngIf="day.id">
         <ion-grid class="addictions">
-          <ion-row class="addiction Sommeil">
+          <ion-row class="addiction Sommeil" *ngIf="sleep">
             <ion-col>
               <img [src]="'assets/img/Sommeil.png'">
               <div class="addiction-name">Sommeil</div>

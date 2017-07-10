@@ -10,13 +10,17 @@
       <ion-item>Activation des informations suivies</ion-item>
     </ion-list>
     <ion-list>
+      <ion-item>
+        <ion-label>Sommeil</ion-label>
+        <ion-toggle [(ngModel)]="sleep" (ionChange)="toggleSleep()" item-right></ion-toggle>
+      </ion-item>
       <ion-item *ngFor="let addiction of addictions">
         <ion-label>{{ addiction.name }}</ion-label>
         <ion-toggle [(ngModel)]="addiction.activated" (ionChange)="infoChange(addiction)" item-right></ion-toggle>
       </ion-item>
     </ion-list>
     <ion-list>
-      <ion-item (click)="goToAgenda()">
+      <ion-item (click)="goToAgenda()" *ngIf="sleep">
         Agenda de sommeil
       </ion-item>
       <ion-item (click)="goToSettings()">

@@ -13,6 +13,7 @@ import { Day } from '../../entities/day';
 export class Home {
 	startDate: string;
 	days: Day[] = [];
+	sleep: boolean;
 
 	constructor(public storage: Storage, public modalCtrl: ModalController, public dataProvider: DataProvider, public events: Events) {
 		storage.ready().then(() => {
@@ -97,6 +98,7 @@ export class Home {
 	** Get the initial day in storage and set it if it does not exists
 	*/
 	initializeDate() {
+		this.storage.get('sleep').then((sleep) => {this.sleep = sleep});
 	  	this.storage.get("startDate")
 	  		.then((startDate) => {
 	  			if (!startDate) {

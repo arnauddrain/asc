@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { ViewController, NavParams } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/dataProvider';
@@ -11,6 +12,7 @@ import { NightBreak } from '../../entities/nightBreak';
 })
 export class Form {
 	day: Day;
+	sleep: boolean;
 
 	Math = Math;
 
@@ -35,8 +37,9 @@ export class Form {
  		return date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
  	}
 
-	constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataProvider: DataProvider) {
+	constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataProvider: DataProvider, private storage: Storage) {
 		this.day = navParams.get('day');
+		this.storage.get('sleep').then((sleep) => {this.sleep = sleep});
 	}
 
 	addNightBreak(type: number) {
