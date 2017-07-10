@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
-import { SQLite } from 'ionic-native';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
 import { MigrationProvider } from './migrationProvider';
 
 @Injectable()
 export class DbProvider {
-	db: SQLite;
+	db: SQLiteObject;
 	dbOpened: boolean = false;
-	readyCallbacks: { (db: SQLite): void }[] = [];
+	readyCallbacks: { (db: SQLiteObject): void }[] = [];
 	
-	constructor(private migrationProvider: MigrationProvider, public platform: Platform) {
+	constructor(private sqlite: SQLite, private migrationProvider: MigrationProvider, public platform: Platform) {
 		
 		this.platform.ready().then(() => {
-			this.db = new SQLite();
-
 			console.log("Opening database..");
-			this.db.openDatabase({
+			this.sqlite.create({
 				name: 'mylan.db',
 				location: 'default'
-			}).then(() => {
+			}).then((db: SQLiteObject) => {
 				console.log("The database is open");
+				this.db = db;
 				migrationProvider.migrate(this.db).then(() => {
 					this.dbOpened = true;
 					this.readyCallbacks.map((cb) => cb(this.db));
@@ -43,7 +42,7 @@ export class DbProvider {
 
 	dumpAll() {
 		return this.getDb()
-			.then((db: SQLite) => {
+			.then((db: SQLiteObject) => {
 				return db.transaction((tx) => {
 					tx.executeSql('DROP TABLE IF EXISTS addictions');
 					tx.executeSql('DROP TABLE IF EXISTS days');
@@ -196,7 +195,7 @@ export class DbRequest {
 
 	executeTransaction() {
 		return new Promise((resolve, reject) => {
-			this.dbProvider.getDb().then((db: SQLite) => {
+			this.dbProvider.getDb().then((db: SQLiteObject) => {
 				db.transaction((tx) => {
 					for (let i in this.transactionRequests) {
 						tx.executeSql(this.transactionRequests[i], this.transactionParams[i]);
@@ -223,7 +222,7 @@ export class DbRequest {
 			if (this.currentRequest === null || this.params === null) {
 				return reject("No request prepared");
 			}
-			this.dbProvider.getDb().then((db: SQLite) => {
+			this.dbProvider.getDb().then((db: SQLiteObject) => {
 				db.executeSql(this.currentRequest, this.params).then((data) => {
 					this.resetRequest();
 					resolve(data);

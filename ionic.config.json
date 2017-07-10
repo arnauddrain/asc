@@ -1,6 +1,5 @@
 {
   "name": "rydan",
   "app_id": "cc8bb1e9",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }

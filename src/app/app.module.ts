@@ -10,6 +10,9 @@ import { Form } from '../pages/form/form';
 import { Agenda } from '../pages/agenda/agenda';
 import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
+import { SQLite } from '@ionic-native/sqlite';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { OnlyNapesPipe } from '../pipes/onlyNapesPipe';
 import { OnlyWakeupsPipe } from '../pipes/onlyWakeupsPipe';
@@ -49,7 +52,10 @@ import { MigrationProvider } from '../providers/migrationProvider';
     MigrationProvider,
     ScreenOrientation,
     LocalNotifications,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SQLite,
+    StatusBar,
+    SplashScreen
   ]
 })
 export class AppModule {}

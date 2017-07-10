@@ -145,6 +145,30 @@ ion-card-content {
 	}
 }
 
+.addiction.Depenses {
+	color: $Depenses;
+
+	.progress {
+		background: $Depenses;
+	}
+}
+
+.addiction.Jeux {
+	color: $Jeux;
+
+	.progress {
+		background: $Jeux;
+	}
+}
+
+.addiction.Nourriture {
+	color: $Nourriture;
+
+	.progress {
+		background: $Nourriture;
+	}
+}
+
 .addiction-name {
 	text-align: center;
 	font-weight: bold;

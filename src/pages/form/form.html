@@ -194,6 +194,15 @@
 	                   	<span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
 	                      Nombre de doses dans la journée
 	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Depenses'">
+	                      Dépenses totales
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Jeux'">
+	                      Temps total de jeux
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Nourriture'">
+	                      Nombre de crises
+	                    </span>
 					</ion-col>
 					<ion-col style="text-align: right">
 						<span *ngIf="dayAddiction.addiction.name == 'Ecrans'">
@@ -213,6 +222,15 @@
 	                    </span>
 	                    <span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
 							{{dayAddiction.value / 100}} comprimés
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Depenses'">
+	                      {{dayAddiction.value / 100}} €
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Jeux'">
+	                      {{dayAddiction.value / 100}} heures
+	                    </span>
+	                    <span *ngIf="dayAddiction.addiction.name == 'Nourriture'">
+	                      {{dayAddiction.value / 100}} crises
 	                    </span>
 					</ion-col>
 				</ion-row>

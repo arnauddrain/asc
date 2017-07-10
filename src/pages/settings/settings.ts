@@ -30,8 +30,8 @@ export class Settings {
 			date.setMinutes(time[1]);
 			date.setSeconds(0);
 			this.localNotifications.schedule({
-				title: 'Rydan',
-				text: 'Pensez à remplir vos consommations de la veille.',
+				title: 'ASC',
+				text: 'Pensez à remplir votre carnet.',
 				at: date,
 				every: 'day'
 			});

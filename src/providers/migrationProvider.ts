@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { SQLite } from 'ionic-native';
+import { SQLiteObject } from '@ionic-native/sqlite';
 
 @Injectable()
 export class MigrationProvider {
@@ -15,17 +15,23 @@ export class MigrationProvider {
 		[
 			'INSERT INTO `addictions` (name, activated, maximum, step) VALUES \
 				("Ecrans", 1, 24, 1), \
-				("Cannabis", 1, 20, 1), \
+				("Jeux", 0, 20, 1), \
+				("Nourriture", 0, 15, 1), \
+				("Achats", 0, 500, 10), \
 				("Tabac", 0, 40, 1), \
-				("Alcool", 0, 40, 1), \
-				("Hors Prescription", 0, 10, 0.5), \
-				("Cocaine", 0, 5, 0.25)'
+				("Alcool", 1, 40, 1), \
+				("Cannabis", 0, 20, 1), \
+				("Cocaine", 0, 5, 0.25), \
+				("Hors Prescription", 0, 10, 0.5)'
+		],
+		[
+			'UPDATE `addictions` SET name = "Depenses" WHERE name = "Achats"'
 		]
 	];
 
 	constructor(public storage: Storage) {}
 
-	subExecuteMigration(resolve, reject, db: SQLite, id: number, index: number = 0) {
+	subExecuteMigration(resolve, reject, db: SQLiteObject, id: number, index: number = 0) {
 		if (index >= this.migrations[id].length) {
 			resolve();
 		} else {
@@ -34,13 +40,13 @@ export class MigrationProvider {
 		}
 	}
 
-	executeMigration(db: SQLite, id: number) {
+	executeMigration(db: SQLiteObject, id: number) {
 		return new Promise<void>((resolve, reject) => {
 			this.subExecuteMigration(resolve, reject, db, id);
 		});
 	}
 
-	subMigrate(resolve, reject, db: SQLite) {
+	subMigrate(resolve, reject, db: SQLiteObject) {
 		this.storage.get('version').then((version) => {
 			version = version || 0;
 			if (version < this.migrations.length) {
@@ -55,13 +61,13 @@ export class MigrationProvider {
 		});
 	}
 
-	migrate(db: SQLite) {
+	migrate(db: SQLiteObject) {
 		return new Promise<void>((resolve, reject) => {
 			return this.subMigrate(resolve, reject, db);
 		});
 	}
 
-	reset(db: SQLite) {
+	reset(db: SQLiteObject) {
 		return this.storage.set('version', 0)
 			.then(() => this.migrate(db));
 	}

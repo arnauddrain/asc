@@ -6,9 +6,6 @@ import { DataProvider } from '../../providers/dataProvider';
 import { Form } from '../form/form';
 import { Day } from '../../entities/day';
 
-// Declare Cordova to use filesystem
-declare var cordova: any;
-
 @Component({
 	selector: 'page-home',
 	templateUrl: 'home.html'

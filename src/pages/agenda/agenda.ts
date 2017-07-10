@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
+// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { DataProvider } from '../../providers/dataProvider';
 import { Day } from '../../entities/day';
@@ -28,7 +28,7 @@ export class Agenda {
  		'Nov',
  		'Déc'
  	];
-	constructor(public viewCtrl: ViewController, public storage: Storage, private dataProvider: DataProvider, private screenOrientation: ScreenOrientation) {
+	constructor(public viewCtrl: ViewController, public storage: Storage, private dataProvider: DataProvider/*, private screenOrientation: ScreenOrientation*/) {
 		//FIXME
 		//this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
 		storage.ready().then(() => {

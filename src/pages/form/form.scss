@@ -90,6 +90,24 @@ page-form {
 		}
 	}
 
+	.Depenses {
+		ion-card-header {
+			background: $Depenses;
+		}
+	}
+
+	.Jeux {
+		ion-card-header {
+			background: $Jeux;
+		}
+	}
+
+	.Nourriture {
+		ion-card-header {
+			background: $Nourriture;
+		}
+	}
+
 	ion-label {
 		text-align: center;
 	}

@@ -34,7 +34,7 @@
               <i *ngIf="day.sleepless">Nuit blanche</i>
               <ion-row *ngIf="day.withHypnotic">
                 <ion-col>
-                  <img src="assets/img/hypnoctics.png">
+                  <img src="assets/img/hypnotics.png">
                 </ion-col>
                 <ion-col style="flex: 5" class="hypnotic">
                   Hypnotique à {{ day.hypnotic.replace(':', 'h') }}
@@ -69,6 +69,15 @@
                     </span>
                     <span *ngIf="dayAddiction.addiction.name == 'Hors Prescription'">
                       {{ dayAddiction.value / 100 }} comprimés
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Depenses'">
+                      {{ dayAddiction.value / 100 }} €
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Jeux'">
+                      {{ dayAddiction.value / 100 }} heures
+                    </span>
+                    <span *ngIf="dayAddiction.addiction.name == 'Nourriture'">
+                      {{ dayAddiction.value / 100 }} crises
                     </span>
                   </h3>
                   <div class="progress" [ngStyle]="{width: (dayAddiction.value / 100 / dayAddiction.addiction.maximum) * 100 + '%'}"></div>

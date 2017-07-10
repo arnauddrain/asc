@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Nav, Platform, Events, ModalController } from 'ionic-angular';
-import { StatusBar, Splashscreen  } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Home } from '../pages/home/home';
@@ -27,11 +28,13 @@ export class MyApp {
  		public events: Events,
  		public storage: Storage,
  		public modalCtrl: ModalController,
- 		public localNotifications: LocalNotifications
+ 		public localNotifications: LocalNotifications,
+ 		private statusBar: StatusBar,
+ 		private splashScreen: SplashScreen
  	) {
 	    this.platform.ready().then(() => {
-			StatusBar.styleDefault();
-			Splashscreen.hide();
+			statusBar.styleDefault();
+			splashScreen.hide();
 			this.configureNotifications();
 			this.dataProvider.getAddictions()
 				.then((addictions) => this.addictions = addictions)
@@ -53,8 +56,8 @@ export class MyApp {
 			date.setMinutes(time[1]);
 			date.setSeconds(0);
 			this.localNotifications.schedule({
-				title: 'Rydan',
-				text: 'Pensez à remplir vos consommations de la veille.',
+				title: 'ASC',
+				text: 'Pensez à remplir votre carnet.',
 				at: date,
 				every: 'day'
 			});
