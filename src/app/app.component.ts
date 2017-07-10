@@ -82,7 +82,6 @@ export class MyApp {
  	}
 
  	toggleSleep() {
- 		console.log(this.sleep);
 		this.storage.set('sleep', this.sleep).then(() => {
 			this.events.publish('addictions:updated');
 		});

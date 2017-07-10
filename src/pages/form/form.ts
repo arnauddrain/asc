@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams, Platform, Events } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/dataProvider';
 import { Day } from '../../entities/day';
@@ -37,9 +37,17 @@ export class Form {
  		return date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear();
  	}
 
-	constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataProvider: DataProvider, private storage: Storage) {
+	constructor(
+		public viewCtrl: ViewController, 
+		public navParams: NavParams, 
+		private dataProvider: DataProvider, 
+		private storage: Storage,
+		private platform: Platform,
+		public events: Events
+	) {
 		this.day = navParams.get('day');
 		this.storage.get('sleep').then((sleep) => {this.sleep = sleep});
+		platform.registerBackButtonAction(() => {this.cancel()});
 	}
 
 	addNightBreak(type: number) {
@@ -56,5 +64,10 @@ export class Form {
 				this.viewCtrl.dismiss();
 			})
 			.catch((err) => console.log(err));
+	}
+
+	cancel() {
+		this.events.publish('addictions:updated');
+		this.viewCtrl.dismiss();
 	}
 }

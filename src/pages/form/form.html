@@ -1,6 +1,13 @@
 <ion-header>
 	<ion-navbar>
 		<ion-title>{{ formatDate(day.date) }}</ion-title>
+		<ion-buttons start>
+			<button ion-button (click)="cancel()" strong>
+				<span color="primary">
+					Annuler
+				</span>
+			</button>
+		</ion-buttons>
 		<ion-buttons end>
 			<button ion-button (click)="done()" strong>
 				<span color="primary">
