@@ -8,7 +8,7 @@ page-agenda {
 		border-radius: 10px;
 		width: 98%;
 		margin: auto;
-		margin-top: 10px;
+		padding-top: 50px;
 	}
 
 	.agenda-row {
@@ -23,6 +23,10 @@ page-agenda {
 
 	.agenda-row.header {
 		height: 50px;
+		top: 56px;
+		position: fixed;
+		width: 98%;
+		z-index: 5;
 
 		.agenda-label {
 			padding-right: 2px;

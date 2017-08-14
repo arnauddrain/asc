@@ -73,7 +73,7 @@ export class MyApp {
 	  				return this.storage.set('sleep', 'true').then(() => {
 	  					this.sleep = true;
 	  				});
-	  			} else if (sleep === 'true') {
+	  			} else if (sleep === 'true' || sleep === true) {
 	  				this.sleep = true;
 	  			} else {
 	  				this.sleep = false;
