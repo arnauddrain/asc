@@ -7,6 +7,6 @@ import { NightBreak } from '../entities/nightBreak';
 })
 export class OnlyNapesPipe implements PipeTransform {
     transform(nightBreaks: NightBreak[]) {
-        return nightBreaks.filter(nightBreak => nightBreak.type != 0);
+        return nightBreaks.filter(nightBreak => nightBreak.type !== 0);
     }
 }
