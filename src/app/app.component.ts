@@ -34,8 +34,8 @@ export class MyApp {
  		private splashScreen: SplashScreen
  	) {
 	    this.platform.ready().then(() => {
-			statusBar.styleDefault();
-			splashScreen.hide();
+			this.statusBar.styleDefault();
+			this.splashScreen.hide();
 			this.configureNotifications();
 			this.dataProvider.getAddictions()
 				.then((addictions) => this.addictions = addictions)

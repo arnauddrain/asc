@@ -38,16 +38,16 @@ export class Form {
  	}
 
 	constructor(
-		public viewCtrl: ViewController, 
-		public navParams: NavParams, 
-		private dataProvider: DataProvider, 
+		public viewCtrl: ViewController,
+		public navParams: NavParams,
+		private dataProvider: DataProvider,
 		private storage: Storage,
 		private platform: Platform,
 		public events: Events
 	) {
 		this.day = navParams.get('day');
 		this.storage.get('sleep').then((sleep) => {this.sleep = sleep});
-		platform.registerBackButtonAction(() => {this.cancel()});
+		this.platform.registerBackButtonAction(() => {this.cancel()});
 	}
 
 	addNightBreak(type: number) {
