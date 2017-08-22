@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Events, ModalController } from 'ionic-angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { DataProvider } from '../../providers/dataProvider';
 import { Form } from '../form/form';
@@ -15,7 +16,12 @@ export class Home {
   days: Day[] = [];
   sleep: boolean;
 
-  constructor(public storage: Storage, public modalCtrl: ModalController, public dataProvider: DataProvider, public events: Events) {
+  constructor(public storage: Storage, public modalCtrl: ModalController, public dataProvider: DataProvider, public events: Events, private screenOrientation: ScreenOrientation) {
+    try {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    } catch (e) {
+      console.log('exception', e);
+    }
     storage.ready().then(() => {
       this.initializeDate();
       this.events.subscribe('addictions:updated', () => {

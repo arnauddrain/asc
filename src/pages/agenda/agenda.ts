@@ -138,7 +138,12 @@ export class Agenda {
         .catch((err) => console.log(err));
     }
 
-    back() {
+  back() {
+    try {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    } catch (e) {
+      console.log('exception', e);
+    }
     this.viewCtrl.dismiss();
   }
 }
