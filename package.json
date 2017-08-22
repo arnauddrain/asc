@@ -73,7 +73,7 @@
         "cordova-plugin-splashscreen"
     ],
     "cordovaPlatforms": [],
-    "description": "rydan: An Ionic project",
+    "description": "ASC - Agenda de Sommeil et Comportements",
     "cordova": {
         "plugins": {
             "cordova-plugin-console": {},
