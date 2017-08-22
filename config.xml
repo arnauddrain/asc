@@ -3,7 +3,7 @@
     <name>ASC</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://10.10.22.15:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://192.168.250.2:8100" />
@@ -95,4 +95,5 @@
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.5" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <allow-navigation href="http://10.10.22.15:8100" />
 </widget>
