@@ -25,6 +25,8 @@ page-agenda {
 		height: 50px;
 		top: 56px;
 		position: fixed;
+		// Tricks for iOS, otherwise the position is not updated after scrolling..
+		transform: translate3d(0, 0, 0);
 		width: 98%;
 		z-index: 5;
 
