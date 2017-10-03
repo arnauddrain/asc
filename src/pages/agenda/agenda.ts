@@ -52,6 +52,9 @@ export class Agenda {
   }
 
   computeSleepWidth(day: Day) {
+    if (day.sleepless || !day.sleepFilled) {
+      return 0;
+    }
     return (day.sleepDuration(false) / (24 * 60) * 100) + '%';
   }
 
@@ -112,7 +115,7 @@ export class Agenda {
             this.days.unshift(days[0]);
             days.shift();
           } else {
-            let day = new Day(0, currentDate, '', false, null, 0, null, 0, false, null);
+            let day = new Day(0, currentDate, '', false, false, null, 0, null, 0, false, null);
             this.dataProvider.createDay(day).catch((err) => console.log(err));
             this.days.unshift(day);
           }

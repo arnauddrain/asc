@@ -26,7 +26,12 @@
 				<img src="assets/img/Sommeil-form.png" height="150">
 			</div>
 		</ion-card-header>
-		<ion-card-content>
+		<ion-card-content *ngIf="!day.sleepFilled">
+			<button ion-button (click)="day.sleepFilled = true" class="button-fill-now">
+				Editer le sommeil
+			</button>
+		</ion-card-content>
+		<ion-card-content *ngIf="day.sleepFilled">
 			<ion-row>
 				<ion-col>
 					<ion-item>

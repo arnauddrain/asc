@@ -7,6 +7,7 @@ export class Day {
     public date: Date,
     public note: string,
     public sleepless: any,
+    public sleepFilled: any,
     public bedtime: string,
     public bedtimeDuration: number,
     public waking: string,
@@ -19,6 +20,10 @@ export class Day {
       this.sleepless = false;
     else
       this.sleepless = sleepless;
+    if (sleepFilled === 'false')
+      this.sleepFilled = false;
+    else
+      this.sleepFilled = sleepFilled;
     if (withHypnotic === 'false')
       this.withHypnotic = false;
     else

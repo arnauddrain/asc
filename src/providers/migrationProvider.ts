@@ -26,6 +26,10 @@ export class MigrationProvider {
     ],
     [
       'UPDATE `addictions` SET name = "Depenses" WHERE name = "Achats"'
+    ],
+    [
+      'ALTER TABLE `days` ADD sleep_filled BOOLEAN',
+      'UPDATE `days` SET sleep_filled = true'
     ]
   ];
 

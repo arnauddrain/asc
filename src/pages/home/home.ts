@@ -88,7 +88,7 @@ export class Home {
             this.days.unshift(days[0]);
             days.shift();
           } else {
-            let day = new Day(0, currentDate, '', false, '21:00', 0, '07:00', 0, false, '20:00');
+            let day = new Day(0, currentDate, '', false, false, '21:00', 0, '07:00', 0, false, '20:00');
             this.dataProvider.createDay(day).catch((err) => console.log(err));
             this.days.unshift(day);
           }
