@@ -70,7 +70,7 @@ export class DataProvider {
     return new DbRequest(this.dbProvider).update('days', [
         ['note', day.note],
         ['sleepless', day.sleepless],
-        ['sleep_filled', day.sleepFilled],
+        ['sleep_filled2', day.sleepFilled],
         ['bedtime', day.bedtime],
         ['bedtime_duration', String(day.bedtimeDuration)],
         ['waking', day.waking],
@@ -132,7 +132,7 @@ export class DataProvider {
             ['date', this.sqlLiteDate(day.date)],
             ['note', day.note],
             ['sleepless', day.sleepless],
-            ['sleep_filled', day.sleepFilled],
+            ['sleep_filled2', day.sleepFilled],
             ['bedtime', day.bedtime],
             ['bedtime_duration', String(day.bedtimeDuration)],
             ['waking', day.waking],
@@ -168,7 +168,7 @@ export class DataProvider {
           let indexedDays: Day[] = [];
           for (var i = 0; i < data.rows.length; i++) {
             let row = data.rows.item(i);
-            let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.sleep_filled, row.bedtime, row.bedtime_duration, row.waking, row.waking_duration, row.with_hypnotic, row.hypnotic);
+            let day = new Day(row.id, new Date(row.date), row.note, row.sleepless, row.sleep_filled2, row.bedtime, row.bedtime_duration, row.waking, row.waking_duration, row.with_hypnotic, row.hypnotic);
             days.push(day);
             indexedDays[day.id] = day;
           }
