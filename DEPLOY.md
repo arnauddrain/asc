@@ -3,7 +3,7 @@ $> ionic upload
 
 To deploy on the Play Store:
 -Upate version in config.xml
-$> ionic cordova build --aot --release android
+$> ionic cordova build --aot --release --prod android
 $> jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
 $> cd platforms/android/build/outputs/apk
 $> rm android-release.apk
