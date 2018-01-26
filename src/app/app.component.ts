@@ -34,13 +34,14 @@ export class MyApp {
     private splashScreen: SplashScreen
   ) {
       this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.configureNotifications();
-      this.dataProvider.getAddictions()
-        .then((addictions) => this.addictions = addictions)
-        .catch((err) => console.log(err));
-      this.configureSleep();
+        this.dumpAll();
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        this.configureNotifications();
+        this.dataProvider.getAddictions()
+          .then((addictions) => this.addictions = addictions)
+          .catch((err) => console.log(err));
+        this.configureSleep();
       });
   }
 
