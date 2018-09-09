@@ -4,15 +4,18 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { SQLite } from '@ionic-native/sqlite';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { MyApp } from './app.component';
+
 import { Home } from '../pages/home/home';
 import { Form } from '../pages/form/form';
 import { Agenda } from '../pages/agenda/agenda';
 import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
-import { SQLite } from '@ionic-native/sqlite';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { OnlyNapesPipe } from '../pipes/onlyNapesPipe';
 import { OnlyWakeupsPipe } from '../pipes/onlyWakeupsPipe';
@@ -57,7 +60,8 @@ import { NotificationsProvider } from '../providers/notificationsProvider';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SQLite,
     StatusBar,
-    SplashScreen
+    SplashScreen,
+    GoogleAnalytics
   ]
 })
 export class AppModule {}

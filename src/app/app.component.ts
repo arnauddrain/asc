@@ -4,6 +4,7 @@ import { Events, ModalController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import { Home } from '../pages/home/home';
 import { Agenda } from '../pages/agenda/agenda';
@@ -32,7 +33,8 @@ export class MyApp {
     public modalCtrl: ModalController,
     private notifications: NotificationsProvider,
     private statusBar: StatusBar,
-    private splashScreen: SplashScreen
+    private splashScreen: SplashScreen,
+    private ga: GoogleAnalytics
   ) {
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
@@ -42,9 +44,17 @@ export class MyApp {
           .then((addictions) => this.addictions = addictions)
           .catch((err) => console.log(err));
         this.configureSleep();
-      });
+        this.startGa();
+    });
   }
 
+  startGa() {
+    this.ga.startTrackerWithId('UA-107393916-1')
+      .then(() => {
+        console.log('Google analytics is ready now');
+          this.ga.trackView('app');
+      })
+      .catch(e => console.log('Error starting GoogleAnalytics', e));
   }
 
   configureSleep() {
