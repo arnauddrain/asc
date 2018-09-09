@@ -34,7 +34,6 @@ export class MyApp {
     private splashScreen: SplashScreen
   ) {
       this.platform.ready().then(() => {
-        this.dumpAll();
         this.statusBar.styleDefault();
         this.splashScreen.hide();
         this.configureNotifications();
