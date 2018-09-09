@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Events, ModalController, Nav, Platform } from 'ionic-angular';
+import { Events, ModalController, Nav, Platform, AlertController } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -34,7 +34,8 @@ export class MyApp {
     private notifications: NotificationsProvider,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private ga: GoogleAnalytics
+    private ga: GoogleAnalytics,
+    private alertCtrl: AlertController
   ) {
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
@@ -113,13 +114,31 @@ export class MyApp {
     }
 
     dumpAll() {
-      this.storage.set('startDate', null)
-        .then(() => {
-          return this.dataProvider.dumpAll();
-        })
-        .then(() => {
-          this.events.publish('addictions:updated');
-        });
+      let alert = this.alertCtrl.create({
+        title: 'Confirmation',
+        message: 'Etes vous sur de vouloir tout supprimer ?',
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Oui, tout supprimer',
+            handler: () => {
+              this.storage.set('startDate', null)
+                .then(() => {
+                  return this.dataProvider.dumpAll();
+                })
+                .then(() => {
+                  this.events.publish('addictions:updated');
+                });
+            }
+          }
+        ]
+      });
+      alert.present();
     }
 
     addDay() {
