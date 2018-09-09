@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let day of days" [ngClass]="(!day.id) ? 'to-fill' : ''" (click)="goToForm($event, day)">
+  <ion-card *ngFor="let day of days" [ngClass]="(!day.id) ? 'to-fill' : ''" (click)="goToForm(day)">
 
     <ion-card-header>
       {{ formatDate(day.date) }}

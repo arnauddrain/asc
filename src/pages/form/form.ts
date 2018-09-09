@@ -67,7 +67,6 @@ export class Form {
   }
 
   cancel() {
-    this.events.publish('addictions:updated');
     this.viewCtrl.dismiss();
   }
 }

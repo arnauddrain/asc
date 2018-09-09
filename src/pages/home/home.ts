@@ -103,24 +103,28 @@ export class Home {
   ** Get the initial day in storage and set it if it does not exists
   */
   initializeDate() {
+    this.days = [];
     this.storage.get('sleep').then((sleep) => this.sleep = sleep);
-      this.storage.get('startDate')
-        .then((startDate) => {
-          if (!startDate) {
-            startDate = new Date().toDateString();
-            this.storage.set('startDate', startDate);
-          }
-          this.startDate = startDate;
-          this.checkDays();
-        })
-        .catch((err) => console.log(err));
-    }
+    this.storage.get('startDate')
+      .then((startDate) => {
+        if (!startDate) {
+          startDate = new Date().toDateString();
+          this.storage.set('startDate', startDate);
+        }
+        this.startDate = startDate;
+        this.checkDays();
+      })
+      .catch((err) => console.log(err));
+  }
 
-    goToForm(event, day) {
-      let formModal = this.modalCtrl.create(Form, {
-        day: day
-      });
-      formModal.present();
-    }
+  goToForm(day) {
+    let formModal = this.modalCtrl.create(Form, {
+      day: day
+    });
+    formModal.onDidDismiss(() => {
+      this.initializeDate();
+    });
+    formModal.present();
+  }
 
 }
