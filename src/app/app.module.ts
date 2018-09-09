@@ -8,6 +8,7 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { SQLite } from '@ionic-native/sqlite';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import { MyApp } from './app.component';
 
@@ -61,7 +62,8 @@ import { NotificationsProvider } from '../providers/notificationsProvider';
     SQLite,
     StatusBar,
     SplashScreen,
-    GoogleAnalytics
+    GoogleAnalytics,
+    EmailComposer
   ]
 })
 export class AppModule {}
