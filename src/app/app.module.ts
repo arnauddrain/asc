@@ -20,6 +20,7 @@ import { OnlyWakeupsPipe } from '../pipes/onlyWakeupsPipe';
 import { DataProvider } from '../providers/dataProvider';
 import { DbProvider } from '../providers/dbProvider';
 import { MigrationProvider } from '../providers/migrationProvider';
+import { NotificationsProvider } from '../providers/notificationsProvider';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MigrationProvider } from '../providers/migrationProvider';
     DataProvider,
     DbProvider,
     MigrationProvider,
+    NotificationsProvider,
     ScreenOrientation,
     LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

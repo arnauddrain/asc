@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { LocalNotifications } from '@ionic-native/local-notifications';
+
+import { NotificationsProvider } from '../../providers/notificationsProvider';
 
 @Component({
   selector: 'page-settings',
@@ -12,30 +13,8 @@ export class Settings {
   public notifications = false;
   public notificationstime = '10:00';
 
-  constructor(public viewCtrl: ViewController, public storage: Storage, public localNotifications: LocalNotifications) {
+  constructor(public viewCtrl: ViewController, public storage: Storage, private notificationsProvider: NotificationsProvider) {
     this.configureNotifications();
-  }
-
-  launchNotifications() {
-    this.localNotifications.cancelAll().then(() => {
-      return this.storage.get('notificationstime');
-    })
-    .then((timeString) => {
-      let time = timeString.split(':');
-      let date = new Date();
-      if (date.getHours() > time[0] || (date.getHours() === time[0] && date.getMinutes() > time[1])) {
-        date.setDate(Number(date.getDate()) + 1);
-      }
-      date.setHours(time[0]);
-      date.setMinutes(time[1]);
-      date.setSeconds(0);
-      this.localNotifications.schedule({
-        title: 'ASC',
-        text: 'Pensez à remplir votre carnet.',
-        at: date,
-        every: 'day'
-      });
-    });
   }
 
   configureNotifications() {
@@ -52,16 +31,16 @@ export class Settings {
   toggleNotifications() {
     if (this.notifications) {
       this.storage.set('notifications', 'true');
-      this.launchNotifications();
+      this.notificationsProvider.launch();
     } else {
       this.storage.set('notifications', 'false');
-      this.localNotifications.cancelAll();
+      this.notificationsProvider.cancelAll();
     }
   }
 
   updateNotificationsTime() {
     this.storage.set('notificationstime', this.notificationstime);
-    this.launchNotifications();
+    this.notificationsProvider.launch();
   }
 
     back() {

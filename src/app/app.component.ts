@@ -10,6 +10,7 @@ import { Agenda } from '../pages/agenda/agenda';
 import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
 import { DataProvider } from '../providers/dataProvider';
+import { NotificationsProvider } from '../providers/notificationsProvider';
 import { Addiction } from '../entities/addiction';
 
 @Component({
@@ -29,7 +30,7 @@ export class MyApp {
     public events: Events,
     public storage: Storage,
     public modalCtrl: ModalController,
-    public localNotifications: LocalNotifications,
+    private notifications: NotificationsProvider,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
   ) {
@@ -44,26 +45,6 @@ export class MyApp {
       });
   }
 
-  launchNotifications() {
-    this.localNotifications.cancelAll().then(() => {
-      return this.storage.get('notificationstime');
-    })
-    .then((timeString) => {
-      let time = timeString.split(':');
-      let date = new Date();
-      if (date.getHours() > time[0] || (date.getHours() === time[0] && date.getMinutes() > time[1])) {
-        date.setDate(Number(date.getDate()) + 1);
-      }
-      date.setHours(time[0]);
-      date.setMinutes(time[1]);
-      date.setSeconds(0);
-      this.localNotifications.schedule({
-        title: 'ASC',
-        text: 'Pensez à remplir votre carnet.',
-        at: date,
-        every: 'day'
-      });
-    });
   }
 
   configureSleep() {
@@ -94,10 +75,10 @@ export class MyApp {
             return this.storage.set('notifications', 'true').then(() => {
               return this.storage.set('notificationstime', '10:00');
             }).then(() => {
-              this.launchNotifications();
+              this.notifications.launch();
             });
           } else if (notifications === 'true') {
-            this.launchNotifications();
+            this.notifications.launch();
           }
         });
   }
