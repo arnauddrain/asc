@@ -19,7 +19,7 @@ export class MigrationProvider {
         ("Nourriture", 0, 15, 1), \
         ("Achats", 0, 500, 10), \
         ("Tabac", 0, 40, 1), \
-        ("Alcool", 1, 40, 1), \
+        ("Alcool", 0, 40, 1), \
         ("Cannabis", 0, 20, 1), \
         ("Cocaine", 0, 5, 0.25), \
         ("Hors Prescription", 0, 10, 0.5)'
