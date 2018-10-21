@@ -11,6 +11,7 @@ import { NightBreak } from '../../entities/nightBreak';
   templateUrl: 'form.html'
 })
 export class Form {
+  unRegisterBackButtonAction: any;
   day: Day;
   sleep: boolean;
 
@@ -47,7 +48,7 @@ export class Form {
   ) {
     this.day = navParams.get('day');
     this.storage.get('sleep').then((sleep) => this.sleep = sleep);
-    this.platform.registerBackButtonAction(() => this.cancel());
+    this.unRegisterBackButtonAction = this.platform.registerBackButtonAction(() => this.cancel());
   }
 
   addNightBreak(type: number) {
@@ -61,12 +62,14 @@ export class Form {
   done() {
     this.dataProvider.saveDay(this.day)
       .then((day) => {
+        this.unRegisterBackButtonAction();
         this.viewCtrl.dismiss();
       })
       .catch((err) => console.log(err));
   }
 
   cancel() {
+    this.unRegisterBackButtonAction();
     this.viewCtrl.dismiss();
   }
 }
