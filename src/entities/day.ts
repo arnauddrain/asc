@@ -2,6 +2,10 @@ import { DayAddiction } from './dayAddiction';
 import { NightBreak } from './nightBreak';
 
 export class Day {
+  convertBoolean(value) {
+    return value === 'false' ? false : value;
+  }
+
   constructor(
     public id: number,
     public date: Date,
@@ -16,33 +20,24 @@ export class Day {
     public hypnotic: string,
     public dayAddictions: DayAddiction[] = [],
     public nightBreaks: NightBreak[] = []) {
-    if (sleepless === 'false')
-      this.sleepless = false;
-    else
-      this.sleepless = sleepless;
-    if (sleepFilled === 'false')
-      this.sleepFilled = false;
-    else
-      this.sleepFilled = sleepFilled;
-    if (withHypnotic === 'false')
-      this.withHypnotic = false;
-    else
-      this.withHypnotic = withHypnotic;
+    this.sleepless = this.convertBoolean(sleepless);
+    this.sleepFilled = this.convertBoolean(sleepFilled);
+    this.withHypnotic = this.convertBoolean(withHypnotic);
   }
 
-  sleepDuration(withBreaks: boolean = true): number {
-    if (!this.bedtime || !this.waking) {
+  sleepDuration(withBreaks = true): number {
+    if (this.bedtime === '' || this.waking === '') {
       return 0;
     }
-    let startTime = this.bedtime.split(':');
-    let endTime = this.waking.split(':');
+    const startTime = this.bedtime.split(':');
+    const endTime = this.waking.split(':');
     if (endTime[0] < startTime[0] || (endTime[0] === startTime[0] && endTime[1] < startTime[1])) {
       endTime[0] = String(parseInt(endTime[0], 10) + 24);
     }
     let time = parseInt(endTime[1], 10) - parseInt(startTime[1], 10);
     time += parseInt(endTime[0], 10) * 60 - parseInt(startTime[0], 10) * 60;
     if (withBreaks) {
-      this.nightBreaks.forEach((nightBreak) => {
+      this.nightBreaks.forEach(nightBreak => {
         if (nightBreak.type === 0) {
           time -= nightBreak.duration;
         } else {

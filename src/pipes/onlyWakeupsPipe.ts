@@ -1,9 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { NightBreak } from '../entities/nightBreak';
 
 @Pipe({
     name: 'onlywakeups',
-    pure: false
+    pure: false,
 })
 export class OnlyWakeupsPipe implements PipeTransform {
     transform(nightBreaks: NightBreak[]) {

@@ -1,31 +1,30 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { ViewController } from 'ionic-angular';
 
 import { NotificationsProvider } from '../../providers/notificationsProvider';
 
 @Component({
   selector: 'page-settings',
-  templateUrl: 'settings.html'
+  templateUrl: 'settings.html',
 })
 export class Settings {
-
-  public notifications = false;
-  public notificationstime = '10:00';
+  notifications = false;
+  notificationstime = '10:00';
 
   constructor(public viewCtrl: ViewController, public storage: Storage, private notificationsProvider: NotificationsProvider) {
     this.configureNotifications();
   }
 
+  convertBoolean(value) {
+    return value === 'false' ? false : value;
+  }
+
   configureNotifications() {
-    this.storage.get('notifications').then((notifications) => {
-      if (notifications === 'true') {
-        this.notifications = true;
-      } else {
-        this.notifications = false;
-      }
+    this.storage.get('notifications').then(notifications => {
+      this.notifications = this.convertBoolean(notifications);
     });
-    this.storage.get('notificationstime').then((notificationstime) => this.notificationstime = notificationstime);
+    this.storage.get('notificationstime').then(notificationstime => this.notificationstime = notificationstime);
   }
 
   toggleNotifications() {
@@ -43,7 +42,7 @@ export class Settings {
     this.notificationsProvider.launch();
   }
 
-    back() {
+  back() {
     this.viewCtrl.dismiss();
   }
 }

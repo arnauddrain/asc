@@ -3,12 +3,12 @@ import { ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-about',
-  templateUrl: 'about.html'
+  templateUrl: 'about.html',
 })
 export class About {
-
   constructor(public viewCtrl: ViewController) {}
-    back() {
+
+  back() {
     this.viewCtrl.dismiss();
   }
 }

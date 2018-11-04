@@ -1,16 +1,14 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicStorageModule } from '@ionic/storage';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { EmailComposer } from '@ionic-native/email-composer';
+import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
-import { MyApp } from './app.component';
 
 import { About } from '../pages/about/about';
 import { Agenda } from '../pages/agenda/agenda';
@@ -25,6 +23,8 @@ import { DataProvider } from '../providers/dataProvider';
 import { DbProvider } from '../providers/dbProvider';
 import { MigrationProvider } from '../providers/migrationProvider';
 import { NotificationsProvider } from '../providers/notificationsProvider';
+
+import { MyApp } from './app.component';
 
 @NgModule({
   declarations: [

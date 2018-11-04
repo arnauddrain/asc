@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
+
 import { MigrationProvider } from './migrationProvider';
 
 @Injectable()
 export class DbProvider {
   db: SQLiteObject;
-  dbOpened: boolean = false;
-  readyCallbacks: { (db: SQLiteObject): void }[] = [];
+  dbOpened = false;
+  readyCallbacks: ((db: SQLiteObject) => void)[] = [];
 
   constructor(private sqlite: SQLite, private migrationProvider: MigrationProvider, public platform: Platform) {
     this.platform.ready().then(() => {
@@ -56,10 +57,10 @@ export class DbProvider {
 
 @Injectable()
 export class DbRequest {
-  currentRequest: string = null;
-  params: string[] = null;
+  currentRequest: string = undefined;
+  params: string[] = undefined;
 
-  isInTransaction: boolean = false;
+  isInTransaction = false;
   transactionRequests: string[] = [];
   transactionParams: string[][] = [];
 
@@ -75,7 +76,7 @@ export class DbRequest {
     }
   }
 
-  private completeRequest(request: string, params: string[] = null) {
+  private completeRequest(request: string, params?: string[]) {
     if (this.isInTransaction) {
       this.transactionRequests[this.transactionParams.length - 1] += request;
       if (params && params.length > 0) {
@@ -89,7 +90,7 @@ export class DbRequest {
     }
   }
 
-  get(tableName: string, params: string[] = null) {
+  get(tableName: string, params?: string[]) {
     let request = 'SELECT ';
     if (params) {
       request += params.join(',');
@@ -102,7 +103,7 @@ export class DbRequest {
   }
 
   getFirst(tableName: string, selector: [string, string]) {
-    let request = 'SELECT * FROM ' + tableName + ' WHERE ' + selector[0] + ' = ?';
+    const request = 'SELECT * FROM ' + tableName + ' WHERE ' + selector[0] + ' = ?';
     this.addRequest(request, [String(selector[1])]);
     return this;
   }
@@ -139,18 +140,19 @@ export class DbRequest {
     return this;
   }
 
-  orderBy(field: string, direction: string = 'ASC') {
+  orderBy(field: string, direction = 'ASC') {
     let request = ' ORDER BY ' + field;
-    if (direction === 'DESC')
+    if (direction === 'DESC') {
       request += ' DESC';
+    }
     this.completeRequest(request);
     return this;
   }
 
   whereIn(field: string, values: string[]) {
     let request = ' WHERE ' + field + ' IN ';
-    let interogations = [];
-    for (let i = 0; i < values.length; i++) {
+    const interogations = [];
+    for (const i of values) {
       interogations.push('?');
     }
     request += '(' + interogations.join(',') + ')';
@@ -159,19 +161,19 @@ export class DbRequest {
   }
 
   where(field: string, operator: string, value: string) {
-    let request = ' WHERE ' + field + ' ' + operator + ' ?';
+    const request = ' WHERE ' + field + ' ' + operator + ' ?';
     this.completeRequest(request, [value]);
     return this;
   }
 
   and(field: string, operator: string, value: string) {
-    let request = ' AND ' + field + ' ' + operator + ' ?';
+    const request = ' AND ' + field + ' ' + operator + ' ?';
     this.completeRequest(request, [value]);
     return this;
   }
 
   join(table: string, field1: string, field2: string) {
-    let request = ' INNER JOIN ' + table + ' ON ' + field1 + ' = ' + field2;
+    const request = ' INNER JOIN ' + table + ' ON ' + field1 + ' = ' + field2;
     this.completeRequest(request);
     return this;
   }
@@ -196,7 +198,7 @@ export class DbRequest {
     return new Promise((resolve, reject) => {
       this.dbProvider.getDb().then((db: SQLiteObject) => {
         db.transaction(tx => {
-          for (let i in this.transactionRequests) {
+          for (const i of Object.keys(this.transactionRequests)) {
             tx.executeSql(this.transactionRequests[i], this.transactionParams[i]);
           }
         }).then(() => {
@@ -211,18 +213,17 @@ export class DbRequest {
   }
 
   private resetRequest() {
-
-    this.currentRequest = null;
-    this.params = null;
+    this.currentRequest = undefined;
+    this.params = undefined;
   }
 
   execute() {
     return new Promise((resolve, reject) => {
-      if (this.currentRequest === null || this.params === null) {
+      if (this.currentRequest === undefined || this.params === undefined) {
         return reject('No request prepared');
       }
       this.dbProvider.getDb().then((db: SQLiteObject) => {
-        db.executeSql(this.currentRequest, this.params).then((data) => {
+        db.executeSql(this.currentRequest, this.params).then(data => {
           this.resetRequest();
           resolve(data);
         }, err => {

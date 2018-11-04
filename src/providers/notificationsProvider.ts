@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class NotificationsProvider {
@@ -13,9 +13,9 @@ export class NotificationsProvider {
     this.localNotifications.cancelAll().then(() => {
       return this.storage.get('notificationstime');
     })
-    .then((timeString) => {
-      let time = timeString.split(':');
-      let date = new Date();
+    .then(timeString => {
+      const time = timeString.split(':');
+      const date = new Date();
       if (date.getHours() > time[0] || (date.getHours() === time[0] && date.getMinutes() > time[1])) {
         date.setDate(Number(date.getDate()) + 1);
       }
@@ -25,8 +25,8 @@ export class NotificationsProvider {
       this.localNotifications.schedule({
         title: 'ASC',
         text: 'Pensez à remplir votre carnet.',
-        trigger: {at: date},
-        every: 'day'
+        trigger: { at: date },
+        every: 'day',
       });
     });
   }

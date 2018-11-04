@@ -1,10 +1,14 @@
-import {Addiction} from './addiction';
+import { Addiction } from './addiction';
 
 export class DayAddiction {
-  public morning: boolean;
-  public afternoon: boolean;
-  public evening: boolean;
-  public night: boolean;
+  morning: boolean;
+  afternoon: boolean;
+  evening: boolean;
+  night: boolean;
+
+  convertBoolean(value) {
+    return value === 'false' ? false : value;
+  }
 
   constructor(
     public addiction: Addiction,
@@ -12,23 +16,11 @@ export class DayAddiction {
     afternoon: any = false,
     evening: any = false,
     night: any = false,
-    public value: number = 0
+    public value = 0
   ) {
-    if (morning === 'false')
-      this.morning = false;
-    else
-      this.morning = morning;
-    if (afternoon === 'false')
-      this.afternoon = false;
-    else
-      this.afternoon = afternoon;
-    if (evening === 'false')
-      this.evening = false;
-    else
-      this.evening = evening;
-    if (night === 'false')
-      this.night = false;
-    else
-      this.night = night;
+    this.morning = this.convertBoolean(morning);
+    this.afternoon = this.convertBoolean(afternoon);
+    this.evening = this.convertBoolean(evening);
+    this.night = this.convertBoolean(night);
   }
 }
