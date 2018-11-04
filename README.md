@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/arnauddrain/asc.svg?branch=master)](https://travis-ci.org/arnauddrain/asc)
+[![Build Status](https://travis-ci.org/arnauddrain/asc.svg?branch=master)](https://travis-ci.org/arnauddrain/asc)
 
 # Asc - Agenda de Sommeil et de Comportement
 
