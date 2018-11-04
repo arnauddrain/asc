@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/arnauddrain/asc.svg?branch=master)](https://travis-ci.org/arnauddrain/asc)
+
 # Asc - Agenda de Sommeil et de Comportement
 
 Une application pour le suivi de sommeil et comportement, développée par Benjamin Pitrat et Arnaud Drain.  
