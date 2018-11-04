@@ -14,16 +14,16 @@ export class DbProvider {
       console.log('Opening database..');
       this.sqlite.create({
         name: 'mylan.db',
-        location: 'default'
+        location: 'default',
       }).then((db: SQLiteObject) => {
         console.log('The database is open');
         this.db = db;
         migrationProvider.migrate(this.db).then(() => {
           this.dbOpened = true;
-          this.readyCallbacks.map((cb) => cb(this.db));
-        }, (err) => console.log('Error during migrations', err));
+          this.readyCallbacks.map(cb => cb(this.db));
+        }, err => console.log('Error during migrations', err));
 
-      }, (err) => {
+      }, err => {
         console.log('Error while opening the database : ', err);
       });
     });
@@ -42,7 +42,7 @@ export class DbProvider {
   dumpAll() {
     return this.getDb()
       .then((db: SQLiteObject) => {
-        return db.transaction((tx) => {
+        return db.transaction(tx => {
           tx.executeSql('DROP TABLE IF EXISTS addictions');
           tx.executeSql('DROP TABLE IF EXISTS days');
           tx.executeSql('DROP TABLE IF EXISTS dayAddictions');
@@ -113,24 +113,24 @@ export class DbRequest {
   }
 
   insert(tableName: string, data: [string, string][]) {
-    let keys = [];
-    let values = [];
-    let interogations = [];
-    data.map((elem) => {
+    const keys = [];
+    const values = [];
+    const interogations = [];
+    data.map(elem => {
       keys.push(elem[0]);
       values.push(elem[1]);
       interogations.push('?');
     });
-    let request = 'INSERT INTO ' + tableName + ' (' + keys.join(',') + ') VALUES (' + interogations.join(',') + ')';
+    const request = 'INSERT INTO ' + tableName + ' (' + keys.join(',') + ') VALUES (' + interogations.join(',') + ')';
     this.addRequest(request, values);
     return this;
   }
 
   update(tableName: string, data: [string, string][]) {
     let request = 'UPDATE ' + tableName + ' SET';
-    let requestSets = [];
-    let values = [];
-    data.map((elem) => {
+    const requestSets = [];
+    const values = [];
+    data.map(elem => {
       requestSets.push(' ' + elem[0] + ' = ?');
       values.push(elem[1]);
     });
@@ -150,7 +150,7 @@ export class DbRequest {
   whereIn(field: string, values: string[]) {
     let request = ' WHERE ' + field + ' IN ';
     let interogations = [];
-    for (var i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       interogations.push('?');
     }
     request += '(' + interogations.join(',') + ')';
@@ -195,14 +195,14 @@ export class DbRequest {
   executeTransaction() {
     return new Promise((resolve, reject) => {
       this.dbProvider.getDb().then((db: SQLiteObject) => {
-        db.transaction((tx) => {
+        db.transaction(tx => {
           for (let i in this.transactionRequests) {
             tx.executeSql(this.transactionRequests[i], this.transactionParams[i]);
           }
         }).then(() => {
           this.resetTransaction();
           resolve();
-        }, (err) => {
+        }, err => {
           this.resetTransaction();
           reject(err);
         });
@@ -225,7 +225,7 @@ export class DbRequest {
         db.executeSql(this.currentRequest, this.params).then((data) => {
           this.resetRequest();
           resolve(data);
-        }, (err) => {
+        }, err => {
           this.resetRequest();
           reject(err);
         });
