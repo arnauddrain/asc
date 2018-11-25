@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
@@ -28,17 +27,17 @@ export class MyApp {
   addictions: Addiction[] = [];
 
   constructor(
-    public platform: Platform,
-    private dataProvider: DataProvider,
-    public events: Events,
-    public storage: Storage,
-    public modalCtrl: ModalController,
-    private notifications: NotificationsProvider,
-    private statusBar: StatusBar,
-    private splashScreen: SplashScreen,
-    private ga: GoogleAnalytics,
     private email: EmailComposer,
-    private alertCtrl: AlertController
+    private ga: GoogleAnalytics,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private storage: Storage,
+    private alertCtrl: AlertController,
+    private events: Events,
+    private modalCtrl: ModalController,
+    private platform: Platform,
+    private dataProvider: DataProvider,
+    private notifications: NotificationsProvider
   ) {
       this.platform.ready().then(() => {
         this.statusBar.styleDefault();
@@ -55,7 +54,6 @@ export class MyApp {
   startGa() {
     this.ga.startTrackerWithId('UA-107393916-1')
       .then(() => {
-        console.log('Google analytics is ready now');
         this.ga.trackView('app');
       })
       .catch(e => console.log('Error starting GoogleAnalytics', e));
@@ -63,38 +61,38 @@ export class MyApp {
 
   configureSleep() {
     this.storage.get('sleep')
-        .then(sleep => {
-          if (sleep === null) {
-            return this.storage.set('sleep', 'true').then(() => {
-              this.sleep = true;
-            });
-          } else if (sleep === 'true' || sleep === true) {
+      .then(sleep => {
+        if (sleep === null) {
+          return this.storage.set('sleep', 'true').then(() => {
             this.sleep = true;
-          } else {
-            this.sleep = false;
-          }
-        });
+          });
+        } else if (sleep === 'true' || sleep === true) {
+          this.sleep = true;
+        } else {
+          this.sleep = false;
+        }
+      });
   }
 
   toggleSleep() {
     this.storage.set('sleep', this.sleep).then(() => {
       this.events.publish('addictions:updated');
     });
-    }
+  }
 
   configureNotifications() {
     this.storage.get('notifications')
-        .then(notifications => {
-          if (notifications === null) {
-            return this.storage.set('notifications', 'true').then(() => {
-              return this.storage.set('notificationstime', '10:00');
-            }).then(() => {
-              this.notifications.launch();
-            });
-          } else if (notifications === 'true') {
+      .then(notifications => {
+        if (notifications === null) {
+          return this.storage.set('notifications', 'true').then(() => {
+            return this.storage.set('notificationstime', '10:00');
+          }).then(() => {
             this.notifications.launch();
-          }
-        });
+          });
+        } else if (notifications === 'true') {
+          this.notifications.launch();
+        }
+      });
   }
 
   infoChange(addiction: Addiction) {
