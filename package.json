@@ -1,6 +1,7 @@
 {
     "name": "asc",
     "author": "Arnaud Drain",
+    "version": "1.0.1",
     "homepage": "https://github.com/arnauddrain/asc",
     "description": "ASC - Agenda de Sommeil et Comportements",
     "private": false,
