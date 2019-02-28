@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Travis integration
 - Lint with scrict Ionic configuration
 
+### Fixed
+- Wake up now count as a wake up and not as a nap
+
 ## [1.0.1] - 2018-10-21
 ### Added
 - This Changelog

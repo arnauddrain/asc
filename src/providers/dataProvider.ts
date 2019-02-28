@@ -191,7 +191,7 @@ export class DataProvider {
             .then((data: any) => {
               for (let i = 0; i < data.rows.length; i++) {
                 const row = data.rows.item(i);
-                const nightBreak = new NightBreak(row.type, row.time, row.duration);
+                const nightBreak = new NightBreak(parseInt(row.type), row.time, parseInt(row.duration));
                 indexedDays[row.id_day].nightBreaks.push(nightBreak);
               }
               resolve(days);
