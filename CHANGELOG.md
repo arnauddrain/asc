@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Wake up now count as a wake up and not as a nap
+- Header for agenda is now at the top of the screen
 
 ## [1.0.1] - 2018-10-21
 ### Added
