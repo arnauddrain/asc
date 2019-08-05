@@ -15,10 +15,8 @@ import { Agenda } from '../pages/agenda/agenda';
 import { Form } from '../pages/form/form';
 import { Home } from '../pages/home/home';
 import { Settings } from '../pages/settings/settings';
-
 import { OnlyNapesPipe } from '../pipes/onlyNapesPipe';
 import { OnlyWakeupsPipe } from '../pipes/onlyWakeupsPipe';
-
 import { DataProvider } from '../providers/dataProvider';
 import { DbProvider } from '../providers/dbProvider';
 import { MigrationProvider } from '../providers/migrationProvider';

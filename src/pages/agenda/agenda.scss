@@ -23,7 +23,7 @@ page-agenda {
 
 	.agenda-row.header {
 		height: 50px;
-		top: 0px;
+		top: 45px;
 		position: fixed;
 		// Tricks for iOS, otherwise the position is not updated after scrolling..
 		transform: translate3d(0, 0, 0);
