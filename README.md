@@ -1,3 +1,5 @@
+The new version of the app, using React and Capacitor is here: https://github.com/arnauddrain/asc-v2
+
 [![Build Status](https://travis-ci.org/arnauddrain/asc.svg?branch=master)](https://travis-ci.org/arnauddrain/asc)
 
 # Asc - Agenda de Sommeil et de Comportement
